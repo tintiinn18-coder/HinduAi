@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hindu AI — Ancient Wisdom, Modern Guidance</title>
+<meta name="description" content="AI-powered Sanatan Dharma guide. Bhagavad Gita, Ramayana, Mahabharata wisdom in Hindi and English."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+:root{
+  --gold:#f5c842;--gold-dim:rgba(245,200,66,0.55);--gold-faint:rgba(245,200,66,0.12);
+  --bg:#100500;--bg-mid:#1c0900;--bg-card:rgba(255,255,255,0.04);
+  --text:rgba(255,240,200,0.95);--text-mid:rgba(245,220,160,0.8);--text-dim:rgba(245,200,100,0.5);
+  --border:rgba(245,180,50,0.2);--radius:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Lora',Georgia,serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:rgba(245,200,66,0.2);border-radius:4px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;background:rgba(16,5,0,0.95);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--border)}
+.nav-logo{font-family:'Cinzel',serif;font-size:17px;font-weight:700;color:var(--gold);letter-spacing:2px;display:flex;align-items:center;gap:8px}
+.nav-om{font-size:20px;animation:glow 3s ease-in-out infinite}
+@keyframes glow{0%,100%{text-shadow:0 0 8px rgba(245,200,66,0.3)}50%{text-shadow:0 0 24px rgba(245,200,66,0.8)}}
+.nav-right{display:flex;gap:8px;align-items:center}
+.btn-sm{padding:6px 14px;border-radius:18px;font-size:12px;cursor:pointer;font-family:'Lora',serif;transition:all .2s;white-space:nowrap}
+.btn-outline{background:transparent;border:0.5px solid var(--gold-dim);color:var(--gold)}
+.btn-outline:hover{background:var(--gold-faint)}
+.btn-gold{background:var(--gold);border:none;color:#1a0800;font-weight:500}
+.btn-gold:hover{background:#ffd84a}
+.nav-user-wrap{display:flex;align-items:center;gap:8px}
+.nav-avatar{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--gold);object-fit:cover}
+.nav-name{font-size:12px;color:var(--gold-dim);max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* HERO — chat first! */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 16px 40px;position:relative;overflow:hidden}
+.mandala{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(600px,90vw);height:min(600px,90vw);opacity:0.05;pointer-events:none;animation:spin 80s linear infinite}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.hero-om{font-size:44px;margin-bottom:10px;animation:glow 3s ease-in-out infinite}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(28px,7vw,60px);font-weight:700;color:var(--gold);letter-spacing:3px;line-height:1.1;margin-bottom:8px}
+.hero-sub{font-family:'Cinzel',serif;font-size:clamp(10px,2vw,15px);letter-spacing:5px;color:var(--text-dim);margin-bottom:14px}
+.hero-desc{max-width:480px;font-size:clamp(13px,1.8vw,15px);color:var(--text-mid);line-height:1.85;margin:0 auto 28px;font-style:italic}
+
+/* VOTD */
+.votd{background:rgba(245,180,30,0.06);border:0.5px solid var(--border);border-radius:var(--radius);padding:16px 18px;max-width:680px;width:100%;margin:0 auto 28px;text-align:center}
+.votd-tag{font-size:10px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;font-family:'Cinzel',serif;margin-bottom:7px}
+.votd-txt{font-size:13px;font-style:italic;color:var(--text-mid);line-height:1.75}
+.votd-src{font-size:11px;color:var(--text-dim);margin-top:5px}
+
+/* CHAT BOX — main focus */
+.chat-wrap{max-width:720px;width:100%;margin:0 auto}
+.chat-box{background:var(--bg-mid);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 0 40px rgba(245,180,30,0.06)}
+.chat-hdr{padding:12px 16px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.chat-hdr-l{display:flex;align-items:center;gap:8px}
+.chat-hdr-om{font-size:18px;animation:glow 3s ease-in-out infinite}
+.chat-title{font-family:'Cinzel',serif;font-size:13px;color:var(--gold);letter-spacing:2px}
+.chat-sub{font-size:10px;color:var(--text-dim);font-style:italic}
+.chat-hdr-r{display:flex;gap:5px;align-items:center}
+.lang-btn{background:transparent;border:0.5px solid rgba(245,200,66,0.2);color:rgba(245,200,66,0.5);padding:3px 8px;border-radius:9px;font-size:11px;cursor:pointer;transition:all .2s;font-family:'Lora',serif}
+.lang-btn.act{background:rgba(245,200,66,0.15);border-color:rgba(245,200,66,0.5);color:var(--gold)}
+.mic-btn{width:26px;height:26px;border-radius:50%;border:0.5px solid rgba(245,200,66,0.22);background:transparent;color:rgba(245,200,66,0.6);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .2s}
+.mic-btn.rec{background:rgba(220,50,50,0.2);border-color:rgba(220,100,100,0.5);color:#ff6b6b;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+
+.msgs{height:340px;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;scrollbar-color:rgba(245,200,66,0.12) transparent}
+.welcome{text-align:center;padding:16px 8px}
+.welcome-om{font-size:30px;display:block;margin-bottom:8px}
+.welcome p{color:var(--text-mid);font-size:13px;line-height:1.85;font-style:italic}
+.welcome p span{color:var(--gold);font-weight:500}
+
+.msg{display:flex;gap:7px;animation:fi .3s ease}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{flex-direction:row-reverse}
+.av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;margin-top:2px}
+.msg.user .av{background:rgba(245,200,66,0.12);border:0.5px solid rgba(245,200,66,0.28);color:var(--gold);font-family:'Cinzel',serif}
+.msg.ai .av{background:rgba(180,80,20,0.28);border:0.5px solid rgba(245,150,50,0.35);font-size:12px}
+.bubble{max-width:86%;padding:8px 12px;border-radius:12px;font-size:13px;line-height:1.75}
+.msg.user .bubble{background:rgba(245,200,66,0.09);border:0.5px solid rgba(245,200,66,0.2);color:var(--text);border-top-right-radius:3px}
+.msg.ai .bubble{background:rgba(255,255,255,0.05);border:0.5px solid rgba(245,150,50,0.15);color:rgba(245,225,185,0.95);border-top-left-radius:3px}
+.msg.ai .bubble .vrs{border-left:2px solid rgba(245,200,66,0.5);padding-left:9px;margin:6px 0;color:#f5d070;font-style:italic;font-size:12px}
+.msg.ai .bubble p{margin-bottom:5px}.msg.ai .bubble p:last-child{margin-bottom:0}
+.thinking{display:flex;align-items:center;gap:4px;padding:8px 12px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(245,150,50,0.12);border-radius:12px;border-top-left-radius:3px;width:60px}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(245,200,66,0.5);animation:bo 1.2s ease-in-out infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes bo{0%,80%,100%{transform:scale(.7);opacity:.4}40%{transform:scale(1);opacity:1}}
+
+.suggs{padding:6px 12px 8px;display:flex;flex-wrap:wrap;gap:5px}
+.sug{background:rgba(245,200,66,0.07);border:0.5px solid rgba(245,200,66,0.18);color:rgba(245,210,140,0.8);padding:4px 10px;border-radius:14px;font-size:11px;cursor:pointer;font-family:'Lora',serif;transition:all .2s;white-space:nowrap}
+.sug:hover{background:rgba(245,200,66,0.15);color:var(--gold)}
+
+.limit-bar{padding:5px 14px;background:rgba(245,180,30,0.04);border-top:0.5px solid rgba(245,180,50,0.1);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.limit-txt{font-size:11px;color:var(--text-dim)}
+.limit-txt span{color:var(--gold);font-weight:500}
+.up-link{font-size:11px;color:var(--gold);cursor:pointer;text-decoration:underline;font-style:italic}
+
+.vstatus{font-size:11px;color:rgba(220,100,100,0.7);text-align:center;padding:2px 0 3px;font-style:italic;display:none}
+.input-row{padding:9px 12px;border-top:0.5px solid var(--border);display:flex;gap:6px;align-items:flex-end}
+.inp{flex:1;background:rgba(255,255,255,0.06);border:0.5px solid rgba(245,200,66,0.2);border-radius:10px;padding:8px 11px;color:rgba(255,240,200,0.95);font-family:'Lora',serif;font-size:13px;resize:none;min-height:36px;max-height:100px;outline:none;transition:border-color .2s}
+.inp::placeholder{color:rgba(245,200,66,0.27);font-style:italic}
+.inp:focus{border-color:rgba(245,200,66,0.5)}
+.mic-inp{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.05);border:0.5px solid rgba(245,200,66,0.2);color:rgba(245,200,66,0.6);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .2s}
+.mic-inp.rec{background:rgba(220,50,50,0.18);border-color:rgba(220,80,80,0.4);color:#ff7070;animation:pulse 1s ease-in-out infinite}
+.send{width:34px;height:34px;border-radius:50%;background:rgba(245,180,30,0.12);border:0.5px solid rgba(245,200,66,0.35);color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:all .2s}
+.send:hover{background:rgba(245,180,30,0.24)}
+.send:disabled{opacity:.3;cursor:not-allowed}
+
+/* SCROLL DOWN SECTIONS */
+.section{padding:60px 16px;max-width:1040px;margin:0 auto}
+.sec-hdr{text-align:center;margin-bottom:40px}
+.sec-hdr h2{font-family:'Cinzel',serif;font-size:clamp(20px,4vw,30px);color:var(--gold);letter-spacing:2px}
+.sec-hdr p{color:var(--text-dim);margin-top:8px;font-size:13px;font-style:italic}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:15px}
+.feat{background:var(--bg-card);border:0.5px solid var(--border);border-radius:var(--radius);padding:22px 18px;transition:all .25s}
+.feat:hover{background:rgba(245,180,30,0.07);border-color:rgba(245,200,66,0.4);transform:translateY(-2px)}
+.feat-icon{font-size:24px;margin-bottom:10px}
+.feat-title{font-family:'Cinzel',serif;font-size:13px;color:var(--gold);margin-bottom:7px;letter-spacing:1px}
+.feat-desc{font-size:12px;color:var(--text-mid);line-height:1.7}
+
+/* PRICING */
+.pricing-sec{padding:60px 16px;background:rgba(255,255,255,0.01)}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px;max-width:820px;margin:40px auto 0}
+.price-card{background:var(--bg-card);border:0.5px solid var(--border);border-radius:var(--radius);padding:26px 18px;text-align:center;position:relative}
+.price-card.pop{border:1.5px solid var(--gold);background:rgba(245,180,30,0.05)}
+.pop-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:#1a0800;font-size:10px;font-weight:600;padding:3px 12px;border-radius:10px;font-family:'Cinzel',serif;white-space:nowrap}
+.price-name{font-family:'Cinzel',serif;font-size:15px;color:var(--gold);letter-spacing:2px;margin-bottom:6px}
+.price-amt{font-family:'Cinzel',serif;font-size:36px;font-weight:700;color:var(--text);margin:11px 0 3px}
+.price-amt span{font-size:14px;color:var(--text-dim)}
+.price-period{font-size:11px;color:var(--text-dim);margin-bottom:18px}
+.price-list{list-style:none;margin-bottom:20px;text-align:left}
+.price-list li{font-size:12px;color:var(--text-mid);padding:5px 0;border-bottom:0.5px solid rgba(245,180,50,0.1);display:flex;align-items:center;gap:6px}
+.price-list li::before{content:'✦';color:var(--gold);font-size:8px;flex-shrink:0}
+.price-list li.off{color:rgba(245,200,100,0.3)}
+.price-list li.off::before{color:rgba(245,200,66,0.15)}
+.btn-plan{width:100%;padding:10px;border-radius:22px;font-family:'Lora',serif;font-size:12px;cursor:pointer;transition:all .2s;border:1px solid var(--gold-dim);color:var(--gold);background:transparent}
+.btn-plan.gold{background:var(--gold);color:#1a0800;border:none;font-weight:500}
+.btn-plan.gold:hover{background:#ffd84a}
+.btn-plan:hover{background:var(--gold-faint)}
+
+/* MODALS */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:200;align-items:center;justify-content:center;padding:16px}
+.overlay.show{display:flex}
+.modal{background:#1c0a00;border:1px solid rgba(245,200,66,0.3);border-radius:16px;max-width:380px;width:100%;padding:28px 22px;text-align:center;position:relative}
+.modal-x{position:absolute;top:11px;right:13px;background:transparent;border:none;color:var(--text-dim);font-size:18px;cursor:pointer}
+.modal-om{font-size:32px;margin-bottom:8px;animation:glow 3s ease-in-out infinite}
+.modal h3{font-family:'Cinzel',serif;font-size:17px;color:var(--gold);margin-bottom:6px;letter-spacing:1px}
+.modal-desc{font-size:12px;color:var(--text-mid);line-height:1.7;margin-bottom:18px;font-style:italic}
+.g-signin-wrap{display:flex;justify-content:center;margin-bottom:12px}
+.modal-plans{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px}
+.mplan{border:0.5px solid var(--border);border-radius:9px;padding:13px 9px;cursor:pointer;transition:all .2s;text-align:center}
+.mplan:hover,.mplan.sel{border-color:var(--gold);background:var(--gold-faint)}
+.mplan-badge{font-size:9px;color:#1a0800;background:var(--gold);padding:2px 7px;border-radius:7px;font-family:'Cinzel',serif;display:inline-block;margin-bottom:4px}
+.mplan-name{font-family:'Cinzel',serif;font-size:12px;color:var(--gold);margin-bottom:2px}
+.mplan-price{font-size:19px;font-weight:700;color:var(--text);font-family:'Cinzel',serif}
+.mplan-price span{font-size:10px;color:var(--text-dim)}
+.mplan-note{font-size:10px;color:var(--text-dim);margin-top:2px}
+.btn-pay{width:100%;padding:11px;background:var(--gold);color:#1a0800;border:none;border-radius:22px;font-family:'Cinzel',serif;font-size:13px;font-weight:600;cursor:pointer;letter-spacing:1px;transition:all .2s;margin-bottom:7px}
+.btn-pay:hover{background:#ffd84a}
+.modal-note{font-size:10px;color:var(--text-dim);font-style:italic}
+
+/* CUSTOMER TABLE */
+.admin-sec{padding:60px 16px;max-width:880px;margin:0 auto;display:none}
+.cust-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:16px}
+.cust-table th{background:rgba(245,180,30,0.1);color:var(--gold);padding:9px 11px;text-align:left;font-family:'Cinzel',serif;font-weight:400;letter-spacing:1px;border-bottom:0.5px solid var(--border)}
+.cust-table td{padding:9px 11px;border-bottom:0.5px solid rgba(245,180,50,0.08);color:var(--text-mid)}
+.badge-free{background:rgba(245,200,66,0.1);color:rgba(245,200,66,0.7);padding:2px 7px;border-radius:7px;font-size:10px}
+.badge-pro{background:rgba(100,200,100,0.1);color:rgba(100,220,100,0.8);padding:2px 7px;border-radius:7px;font-size:10px}
+
+footer{padding:30px 16px;text-align:center;border-top:0.5px solid var(--border)}
+.f-om{font-size:22px;display:block;margin-bottom:6px}
+footer p{font-size:12px;color:var(--text-dim);line-height:1.9}
+footer a{color:var(--gold-dim);text-decoration:none}
+footer a:hover{color:var(--gold)}
+
+@media(max-width:560px){
+  .hero h1{font-size:30px}
+  nav{padding:10px 12px}
+  .modal-plans{grid-template-columns:1fr}
+  .nav-name{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span class="nav-om">ॐ</span> HINDU AI</div>
+  <div class="nav-right" id="nav-right">
+    <button class="btn-sm btn-gold" onclick="showPayModal()">Upgrade ✦</button>
+    <button class="btn-sm btn-outline" onclick="showLoginModal()" id="login-btn">Sign In</button>
+  </div>
+</nav>
+
+<!-- HERO + CHAT (top of page) -->
+<section class="hero">
+  <svg class="mandala" viewBox="0 0 400 400" fill="none">
+    <circle cx="200" cy="200" r="190" stroke="#f5c842" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="150" stroke="#f5c842" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="110" stroke="#f5c842" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="70" stroke="#f5c842" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="30" stroke="#f5c842" stroke-width="0.5"/>
+    <line x1="200" y1="10" x2="200" y2="390" stroke="#f5c842" stroke-width="0.4"/>
+    <line x1="10" y1="200" x2="390" y2="200" stroke="#f5c842" stroke-width="0.4"/>
+    <line x1="55" y1="55" x2="345" y2="345" stroke="#f5c842" stroke-width="0.4"/>
+    <line x1="345" y1="55" x2="55" y2="345" stroke="#f5c842" stroke-width="0.4"/>
+    <polygon points="200,15 382,310 18,310" stroke="#f5c842" stroke-width="0.4" fill="none"/>
+    <polygon points="200,385 18,90 382,90" stroke="#f5c842" stroke-width="0.4" fill="none"/>
+  </svg>
+
+  <div class="hero-om">ॐ</div>
+  <h1>HINDU AI</h1>
+  <div class="hero-sub">Ancient Wisdom · Modern Guidance</div>
+  <p class="hero-desc">Guidance from the Bhagavad Gita, Ramayana, Mahabharata and Sanatan Dharma — in Hindi or English, whenever you need it.</p>
+
+  <!-- VERSE OF THE DAY -->
+  <div class="votd">
+    <div class="votd-tag">🌅 Verse of the Day</div>
+    <div class="votd-txt" id="votd-txt">Loading sacred wisdom...</div>
+    <div class="votd-src" id="votd-src"></div>
+  </div>
+
+  <!-- CHAT BOX -->
+  <div class="chat-wrap">
+    <div class="chat-box">
+      <div class="chat-hdr">
+        <div class="chat-hdr-l">
+          <span class="chat-hdr-om">ॐ</span>
+          <div><div class="chat-title">HINDU AI</div><div class="chat-sub">Your dharmic companion</div></div>
+        </div>
+        <div class="chat-hdr-r">
+          <button class="lang-btn act" id="btn-en" onclick="setLang('en')">EN</button>
+          <button class="lang-btn" id="btn-hi" onclick="setLang('hi')">हिं</button>
+          <button class="mic-btn" id="mic-hdr" onclick="toggleVoice()">🎤</button>
+        </div>
+      </div>
+      <div class="msgs" id="messages">
+        <div class="welcome" id="welcome">
+          <span class="welcome-om">🪔</span>
+          <p>Namaste, dear seeker.<br>I am here to guide you with wisdom from the <span>Bhagavad Gita</span>, <span>Ramayana</span>, <span>Mahabharata</span> and our sacred Dharma.<br><br>Share what is in your heart.</p>
+        </div>
+      </div>
+      <div class="vstatus" id="vstatus">🎙 Listening... speak now</div>
+      <div class="suggs" id="suggs"></div>
+      <div class="limit-bar" id="limit-bar">
+        <div class="limit-txt">Free: <span id="msgs-left">5</span> questions remaining today</div>
+        <span class="up-link" onclick="showPayModal()">Upgrade for unlimited ✦</span>
+      </div>
+      <div class="input-row">
+        <textarea class="inp" id="inp" placeholder="Ask your question, share your thoughts..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+        <button class="mic-inp" id="mic-inp" onclick="toggleVoice()">🎤</button>
+        <button class="send" id="send-btn" onclick="sendMsg()">➤</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section">
+  <div class="sec-hdr"><h2>What Hindu AI Offers</h2><p>Thousands of years of divine wisdom, available now</p></div>
+  <div class="grid-3">
+    <div class="feat"><div class="feat-icon">📖</div><div class="feat-title">Bhagavad Gita</div><div class="feat-desc">Krishna's timeless teachings to Arjuna — about duty, action, and the nature of the self.</div></div>
+    <div class="feat"><div class="feat-icon">🏹</div><div class="feat-title">Ramayana</div><div class="feat-desc">Lord Rama's journey teaches patience, righteousness and the power of Dharma over adversity.</div></div>
+    <div class="feat"><div class="feat-icon">⚔️</div><div class="feat-title">Mahabharata</div><div class="feat-desc">Dilemmas of duty, family and justice — answered through the epic tales of the Pandavas.</div></div>
+    <div class="feat"><div class="feat-icon">🎤</div><div class="feat-title">Voice Input</div><div class="feat-desc">Speak your question in Hindi or English. The guide listens and responds in your language.</div></div>
+    <div class="feat"><div class="feat-icon">🌅</div><div class="feat-title">Daily Verse</div><div class="feat-desc">Start every day with a verse from the Gita or Upanishads to guide your thoughts.</div></div>
+    <div class="feat"><div class="feat-icon">🕉️</div><div class="feat-title">Hindi & English</div><div class="feat-desc">Ask in the language of your heart. Hindu AI replies in Hindi or English seamlessly.</div></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-sec" id="pricing">
+  <div class="sec-hdr" style="text-align:center"><h2>Choose Your Path</h2><p>Begin for free. Deepen your journey with Seva.</p></div>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <div class="price-name">Free</div>
+      <div class="price-amt">₹0<span>/mo</span></div>
+      <div class="price-period">Forever free</div>
+      <ul class="price-list">
+        <li>5 questions per day</li>
+        <li>Hindi &amp; English</li>
+        <li>Verse of the Day</li>
+        <li class="off">Voice input</li>
+        <li class="off">Unlimited questions</li>
+      </ul>
+      <button class="btn-plan" onclick="window.scrollTo({top:0,behavior:'smooth'})">Start Free</button>
+    </div>
+    <div class="price-card pop">
+      <div class="pop-badge">Most Popular</div>
+      <div class="price-name">Seva Plan</div>
+      <div class="price-amt">₹99<span>/mo</span></div>
+      <div class="price-period">Billed monthly</div>
+      <ul class="price-list">
+        <li>Unlimited questions</li>
+        <li>Hindi &amp; English</li>
+        <li>Verse of the Day</li>
+        <li>Voice input</li>
+        <li>Ad-free experience</li>
+      </ul>
+      <button class="btn-plan gold" onclick="openPayment('seva')">Begin Seva — ₹99</button>
+    </div>
+    <div class="price-card">
+      <div class="price-name">Guru Plan</div>
+      <div class="price-amt">₹199<span>/mo</span></div>
+      <div class="price-period">Billed monthly</div>
+      <ul class="price-list">
+        <li>Unlimited questions</li>
+        <li>Hindi &amp; English</li>
+        <li>Verse of the Day</li>
+        <li>Voice input</li>
+        <li>Priority guidance</li>
+      </ul>
+      <button class="btn-plan" onclick="openPayment('guru')">Choose Guru — ₹199</button>
+    </div>
+  </div>
+</section>
+
+<!-- ADMIN — only visible to you -->
+<section class="admin-sec" id="admin-sec">
+  <div class="sec-hdr"><h2>Your Customers</h2><p>Visible only to you when logged in</p></div>
+  <div id="cust-wrap"></div>
+</section>
+
+<footer>
+  <span class="f-om">ॐ</span>
+  <p>Hindu AI — Ancient Wisdom, Modern Guidance<br>
+  <a href="mailto:hello@hinduai.in">hello@hinduai.in</a> &nbsp;·&nbsp;
+  <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms</a><br><br>
+  <span style="font-size:11px;color:rgba(245,200,66,0.2)">© 2025 hinduai.in &nbsp;·&nbsp; सत्यमेव जयते</span></p>
+</footer>
+
+<!-- LOGIN MODAL -->
+<div class="overlay" id="login-modal">
+  <div class="modal">
+    <button class="modal-x" onclick="hideModal('login-modal')">✕</button>
+    <div class="modal-om">🪔</div>
+    <h3>Welcome</h3>
+    <p class="modal-desc">Sign in with Google to save your progress and access your subscription on any device.</p>
+    <div class="g-signin-wrap">
+      <div id="g_id_onload"
+        data-client_id="6938777749-jsgu64psj4h8o28jjbna73lkofd2ps1s.apps.googleusercontent.com"
+        data-callback="handleGoogleLogin"
+        data-auto_prompt="false">
+      </div>
+      <div class="g_id_signin"
+        data-type="standard"
+        data-size="large"
+        data-theme="outline"
+        data-text="sign_in_with"
+        data-shape="rectangular"
+        data-logo_alignment="left">
+      </div>
+    </div>
+    <div class="modal-note">Your data is private and secure 🔒</div>
+  </div>
+</div>
+
+<!-- UPGRADE MODAL -->
+<div class="overlay" id="pay-modal">
+  <div class="modal">
+    <button class="modal-x" onclick="hideModal('pay-modal')">✕</button>
+    <div class="modal-om">🪔</div>
+    <h3>Continue Your Journey</h3>
+    <p class="modal-desc">Upgrade to receive unlimited wisdom from our sacred guide.</p>
+    <div class="modal-plans">
+      <div class="mplan sel" id="mplan-seva" onclick="selectPlan('seva')">
+        <div class="mplan-badge">Popular</div>
+        <div class="mplan-name">Seva</div>
+        <div class="mplan-price">₹99<span>/mo</span></div>
+        <div class="mplan-note">Unlimited + Voice</div>
+      </div>
+      <div class="mplan" id="mplan-guru" onclick="selectPlan('guru')">
+        <div class="mplan-name">Guru</div>
+        <div class="mplan-price">₹199<span>/mo</span></div>
+        <div class="mplan-note">Everything + Priority</div>
+      </div>
+    </div>
+    <button class="btn-pay" id="pay-btn" onclick="initiatePayment()">Pay ₹99 with Razorpay</button>
+    <div class="modal-note">Secure · UPI / Cards / Net Banking · Cancel anytime</div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════
+// YOUR KEYS — update these
+// ══════════════════════════
+const RAZORPAY_KEY = 'rzp_test_REPLACE_WITH_YOUR_KEY'; // razorpay.com → Settings → API Keys
+const ADMIN_EMAIL  = 'danriz884@gmail.com'; // your Gmail — shows customer table only to you
+
+// ══════════════════════════
+// DATA
+// ══════════════════════════
+const VERSES = [
+  {t:"You have the right to perform your duties, but never to the fruits of your actions.",s:"Bhagavad Gita 2.47"},
+  {t:"The soul is never born nor dies. It is unborn, eternal, ever-existing and primeval.",s:"Bhagavad Gita 2.20"},
+  {t:"A person can rise through the efforts of their own mind, or draw themselves down the same way.",s:"Bhagavad Gita 6.5"},
+  {t:"When meditation is mastered, the mind is unwavering like the flame of a lamp in a windless place.",s:"Bhagavad Gita 6.19"},
+  {t:"Sri Rama showed that true strength is not in conquering others — it is in conquering oneself.",s:"Valmiki Ramayana"},
+  {t:"One who has conquered anger has conquered the world.",s:"Mahabharata, Shanti Parva"},
+  {t:"Tat tvam asi — Thou art that. The individual soul and the universal soul are one.",s:"Chandogya Upanishad 6.8.7"},
+  {t:"सत्यमेव जयते — Truth alone triumphs, not falsehood.",s:"Mundaka Upanishad 3.1.6"},
+  {t:"Whatever you do, whatever you eat, whatever you offer — do it as an offering to the Divine.",s:"Bhagavad Gita 9.27"},
+  {t:"It is better to perform one's own duties imperfectly than to master the duties of another.",s:"Bhagavad Gita 3.35"},
+  {t:"Aham Brahmasmi — I am Brahman. The entire universe exists within you.",s:"Brihadaranyaka Upanishad 1.4.10"},
+  {t:"The one who sees inaction in action, and action in inaction, is truly wise.",s:"Bhagavad Gita 4.18"},
+];
+
+const SUGGS = {
+  en:[
+    ["How to find inner peace?","What is Karma?","How to handle failure?","Arjuna's story of courage"],
+    ["What does Gita say about anger?","Rama's lesson on patience","How to forgive others?","What is true success?"],
+    ["How to stay motivated?","Explain Dharma simply","How to overcome ego?","What is Moksha?"],
+    ["How to live with purpose?","Lesson from Mahabharata","How to deal with jealousy?","What is devotion?"]
+  ],
+  hi:[
+    ["मन की शांति कैसे पाएं?","कर्म का अर्थ क्या है?","असफलता से कैसे उठें?","अर्जुन के साहस की कहानी"],
+    ["क्रोध पर गीता क्या कहती है?","राम जी का धैर्य","दूसरों को माफ कैसे करें?","सच्ची सफलता क्या है?"],
+    ["जीवन में प्रेरित कैसे रहें?","धर्म को सरल भाषा में समझाएं","अहंकार से कैसे मुक्त हों?","मोक्ष क्या है?"],
+    ["उद्देश्यपूर्ण जीवन कैसे जिएं?","महाभारत से पाठ","ईर्ष्या से कैसे निपटें?","सच्ची भक्ति क्या है?"]
+  ]
+};
+
+const SYSTEM = `You are a wise Sanatan Dharma guide for Hindu AI (hinduai.in). Your knowledge comes from the Bhagavad Gita, Ramayana, Mahabharata, Upanishads, and teachings of Lord Krishna, Rama, Shiva and other Hindu wisdom.
+
+RULES:
+1. Explain with stories and context — not just quotes.
+2. Use Ramayana or Mahabharata stories when relevant.
+3. Use Bhagavad Gita philosophy when relevant.
+4. Give practical, compassionate advice rooted in Dharma.
+5. Speak like a warm, loving guru — calm and wise.
+6. Keep responses to 3-4 paragraphs.
+7. When quoting scripture write it on its own line starting with "verse:" (lowercase).
+
+Language: Reply in Hindi if user writes Hindi. Reply in English if user writes English.`;
+
+// ══════════════════════════
+// STATE
+// ══════════════════════════
+let lang='en', history=[], loading=false, recog=null, listening=false, selPlan='seva';
+let user=null;
+const FREE_LIMIT=5;
+const PRICES={seva:99,guru:199};
+const PNAMES={seva:'Seva Plan',guru:'Guru Plan'};
+
+// ══════════════════════════
+// INIT
+// ══════════════════════════
+function init(){
+  loadVOTD();
+  renderSuggs();
+  updateBar();
+  loadUser();
+  setupVoice();
+}
+
+// ══════════════════════════
+// GOOGLE LOGIN
+// ══════════════════════════
+function handleGoogleLogin(resp){
+  const p=parseJwt(resp.credential);
+  user={name:p.name,email:p.email,picture:p.picture};
+  localStorage.setItem('hinduai_user',JSON.stringify(user));
+  saveCustomer(user);
+  updateNav();
+  hideModal('login-modal');
+  if(user.email===ADMIN_EMAIL) showAdmin();
+}
+
+function parseJwt(token){
+  return JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')));
+}
+
+function loadUser(){
+  const s=localStorage.getItem('hinduai_user');
+  if(s){user=JSON.parse(s);updateNav();if(user.email===ADMIN_EMAIL)showAdmin();}
+}
+
+function updateNav(){
+  if(!user)return;
+  document.getElementById('nav-right').innerHTML=`
+    <div class="nav-user-wrap">
+      <img class="nav-avatar" src="${user.picture}" alt=""/>
+      <span class="nav-name">${user.name.split(' ')[0]}</span>
+    </div>
+    <button class="btn-sm btn-gold" onclick="showPayModal()">Upgrade ✦</button>
+    <button class="btn-sm btn-outline" onclick="logout()">Sign Out</button>`;
+}
+
+function logout(){localStorage.removeItem('hinduai_user');user=null;location.reload();}
+
+// ══════════════════════════
+// CUSTOMER RECORDS
+// ══════════════════════════
+function saveCustomer(u){
+  let list=JSON.parse(localStorage.getItem('hinduai_customers')||'[]');
+  const i=list.findIndex(c=>c.email===u.email);
+  const rec={name:u.name,email:u.email,plan:isPremium()?localStorage.getItem('hinduai_plan')||'seva':'free',joined:i>=0?list[i].joined:new Date().toLocaleDateString('en-IN'),seen:new Date().toLocaleDateString('en-IN')};
+  if(i>=0)list[i]=rec; else list.push(rec);
+  localStorage.setItem('hinduai_customers',JSON.stringify(list));
+}
+
+function showAdmin(){
+  const sec=document.getElementById('admin-sec');
+  sec.style.display='block';
+  const list=JSON.parse(localStorage.getItem('hinduai_customers')||'[]');
+  const wrap=document.getElementById('cust-wrap');
+  if(!list.length){wrap.innerHTML='<p style="color:var(--text-dim);text-align:center;padding:20px;font-style:italic">No customers yet. Share hinduai.in to get your first users!</p>';return;}
+  wrap.innerHTML=`<p style="font-size:12px;color:var(--text-dim);margin-bottom:10px">Total: <span style="color:var(--gold)">${list.length}</span> &nbsp;·&nbsp; Premium: <span style="color:var(--gold)">${list.filter(c=>c.plan!=='free').length}</span></p>
+  <table class="cust-table"><thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Joined</th></tr></thead>
+  <tbody>${list.map(c=>`<tr><td>${c.name}</td><td>${c.email}</td><td><span class="${c.plan==='free'?'badge-free':'badge-pro'}">${c.plan}</span></td><td>${c.joined}</td></tr>`).join('')}</tbody></table>`;
+}
+
+// ══════════════════════════
+// FREE LIMIT
+// ══════════════════════════
+function key(){return 'hinduai_msgs_'+new Date().toDateString()}
+function used(){return parseInt(localStorage.getItem(key())||'0')}
+function inc(){localStorage.setItem(key(),used()+1)}
+function isPremium(){return localStorage.getItem('hinduai_premium')==='true'}
+
+function updateBar(){
+  const bar=document.getElementById('limit-bar');
+  if(isPremium()){bar.innerHTML='<div style="font-size:11px;color:rgba(245,200,66,0.6)">✦ Premium — Unlimited guidance active</div>';return;}
+  document.getElementById('msgs-left').textContent=Math.max(0,FREE_LIMIT-used());
+}
+
+// ══════════════════════════
+// VOTD
+// ══════════════════════════
+function loadVOTD(){
+  const v=VERSES[new Date().getDate()%VERSES.length];
+  document.getElementById('votd-txt').textContent=v.t;
+  document.getElementById('votd-src').textContent='— '+v.s;
+}
+
+// ══════════════════════════
+// SUGGESTIONS
+// ══════════════════════════
+function renderSuggs(){
+  const c=document.getElementById('suggs');c.innerHTML='';
+  const pool=SUGGS[lang];
+  const row=pool[Math.floor(Math.random()*pool.length)];
+  row.forEach(s=>{const b=document.createElement('button');b.className='sug';b.textContent=s;b.onclick=()=>{document.getElementById('inp').value=s;sendMsg()};c.appendChild(b);});
+}
+
+function setLang(l){
+  lang=l;
+  document.getElementById('btn-en').classList.toggle('act',l==='en');
+  document.getElementById('btn-hi').classList.toggle('act',l==='hi');
+  document.getElementById('inp').placeholder=l==='hi'?'अपना प्रश्न पूछें...':'Ask your question, share your thoughts...';
+  const w=document.getElementById('welcome');
+  if(w)w.querySelector('p').innerHTML=l==='hi'
+    ?'नमस्ते, प्रिय जिज्ञासु।<br>मैं यहाँ हूँ <span>भगवद गीता</span>, <span>रामायण</span>, <span>महाभारत</span> के ज्ञान से आपका मार्गदर्शन करने के लिए।<br><br>अपने मन की बात कहें।'
+    :'Namaste, dear seeker.<br>I am here to guide you with wisdom from the <span>Bhagavad Gita</span>, <span>Ramayana</span>, <span>Mahabharata</span> and our sacred Dharma.<br><br>Share what is in your heart.';
+  renderSuggs();
+}
+
+// ══════════════════════════
+// VOICE
+// ══════════════════════════
+function setupVoice(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR)return;
+  recog=new SR();recog.continuous=false;recog.interimResults=false;
+  const set=on=>{listening=on;['mic-hdr','mic-inp'].forEach(id=>document.getElementById(id).classList.toggle('rec',on));document.getElementById('vstatus').style.display=on?'block':'none';};
+  recog.onstart=()=>set(true);recog.onend=()=>set(false);recog.onerror=()=>set(false);
+  recog.onresult=e=>{document.getElementById('inp').value=e.results[0][0].transcript;autoResize(document.getElementById('inp'));setTimeout(sendMsg,400);};
+}
+
+function toggleVoice(){
+  if(!recog){alert('Voice not supported. Please use Chrome.');return;}
+  if(listening){recog.stop();return;}
+  recog.lang=lang==='hi'?'hi-IN':'en-IN';recog.start();
+}
+
+// ══════════════════════════
+// CHAT
+// ══════════════════════════
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px';}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}}
+
+function appendMsg(role,text){
+  const msgs=document.getElementById('messages');
+  const w=document.getElementById('welcome');if(w)w.remove();
+  const div=document.createElement('div');div.className='msg '+role;
+  const av=document.createElement('div');av.className='av';
+  av.textContent=role==='user'?(lang==='hi'?'आप':'You'):'🪔';
+  const bub=document.createElement('div');bub.className='bubble';
+  if(role==='ai')bub.innerHTML=fmt(text);else bub.textContent=text;
+  div.appendChild(av);div.appendChild(bub);msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;
+}
+
+function fmt(text){
+  return text.split('\n').map(l=>{const t=l.trim();if(!t)return '';if(t.toLowerCase().startsWith('verse:'))return `<div class="vrs">${t.replace(/^verse:\s*/i,'')}</div>`;return `<p>${t}</p>`;}).join('');
+}
+
+function showThink(){
+  const msgs=document.getElementById('messages');
+  const d=document.createElement('div');d.className='msg ai';d.id='think';
+  const av=document.createElement('div');av.className='av';av.textContent='🪔';
+  const th=document.createElement('div');th.className='thinking';th.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+  d.appendChild(av);d.appendChild(th);msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;
+}
+function hideThink(){const e=document.getElementById('think');if(e)e.remove();}
+
+async function sendMsg(){
+  if(loading)return;
+  const inp=document.getElementById('inp');
+  const text=inp.value.trim();if(!text)return;
+  if(!isPremium()&&used()>=FREE_LIMIT){showPayModal();return;}
+  inp.value='';inp.style.height='auto';
+  document.getElementById('suggs').style.display='none';
+  appendMsg('user',text);
+  history.push({role:'user',content:text});
+  loading=true;document.getElementById('send-btn').disabled=true;
+  showThink();
+  if(!isPremium())inc();
+  updateBar();
+  try{
+    const res=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({system:SYSTEM,messages:history})});
+    const data=await res.json();hideThink();
+    if(data.content&&data.content[0]){
+      const reply=data.content[0].text;
+      history.push({role:'assistant',content:reply});
+      appendMsg('ai',reply);
+      renderSuggs();
+      document.getElementById('suggs').style.display='flex';
+    } else {
+      appendMsg('ai','Error: '+(data.error||'Unknown')+'. Please check Anthropic billing and try again. 🙏');
+    }
+  }catch(e){hideThink();appendMsg('ai','Connection error: '+e.message+'. Please try again. 🙏');}
+  loading=false;document.getElementById('send-btn').disabled=false;
+}
+
+// ══════════════════════════
+// MODALS
+// ══════════════════════════
+function showLoginModal(){document.getElementById('login-modal').classList.add('show');}
+function showPayModal(){document.getElementById('pay-modal').classList.add('show');}
+function hideModal(id){document.getElementById(id).classList.remove('show');}
+
+['login-modal','pay-modal'].forEach(id=>{
+  document.getElementById(id).addEventListener('click',function(e){if(e.target===this)hideModal(id);});
+});
+
+function selectPlan(p){
+  selPlan=p;
+  document.getElementById('mplan-seva').classList.toggle('sel',p==='seva');
+  document.getElementById('mplan-guru').classList.toggle('sel',p==='guru');
+  document.getElementById('pay-btn').textContent=`Pay ₹${PRICES[p]} with Razorpay`;
+}
+
+function openPayment(p){selectPlan(p);showPayModal();}
+
+// ══════════════════════════
+// RAZORPAY
+// ══════════════════════════
+function initiatePayment(){
+  const opts={
+    key:RAZORPAY_KEY,
+    amount:PRICES[selPlan]*100,
+    currency:'INR',
+    name:'Hindu AI',
+    description:PNAMES[selPlan]+' — Monthly',
+    prefill:{name:user?.name||'',email:user?.email||''},
+    handler:function(r){
+      localStorage.setItem('hinduai_premium','true');
+      localStorage.setItem('hinduai_plan',selPlan);
+      if(user){user.plan=selPlan;localStorage.setItem('hinduai_user',JSON.stringify(user));saveCustomer(user);}
+      hideModal('pay-modal');updateBar();
+      if(document.getElementById('admin-sec').style.display==='block')showAdmin();
+      appendMsg('ai',lang==='hi'?'आपका भुगतान पूरा हो गया। 🙏 अब असीमित मार्गदर्शन प्राप्त करें। जय श्री राम!':'🙏 Payment successful! Unlimited access is now active. May Dharma guide your path always!');
+    },
+    theme:{color:'#f5c842'}
+  };
+  try{new Razorpay(opts).open();}
+  catch(e){alert('Add your Razorpay key.\nGet it: razorpay.com → Dashboard → Settings → API Keys');}
+}
+
+init();
+</script>
+</body>
+</html>
