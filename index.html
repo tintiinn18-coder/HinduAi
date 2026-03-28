@@ -1,1047 +1,809 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HinduAI — Wisdom of Dharma, Powered by AI</title>
-<meta name="description" content="HinduAI is an AI Knowledge Engine for Sanatan Dharma. Bhagavad Gita, Ramayana, Mahabharata guidance in Hindi or English.">
-<!-- Clerk JS -->
-<script
-  async
-  crossorigin="anonymous"
-  data-clerk-publishable-key="pk_live_Y2xlcmsuaGluZHVhaS5pbiQ"
-  src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
-  type="text/javascript"
-></script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Hindu AI — Ancient Wisdom, Modern Guidance</title>
+<meta name="description" content="AI-powered Sanatan Dharma guide. Bhagavad Gita, Ramayana, Mahabharata wisdom in Hindi & English."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
 <!-- Razorpay -->
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Tiro+Devanagari+Sanskrit:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
-:root {
-  --saffron: #FF6B00;
-  --deep-red: #8B1A1A;
-  --gold: #D4A017;
-  --gold-light: #F5C842;
-  --cream: #FFF8EE;
-  --dark: #1A0A00;
-  --dark2: #2C1A00;
-  --dark3: #241200;
-  --muted: #7A5C3A;
-  --border: rgba(212,160,23,0.2);
-  --border-strong: rgba(212,160,23,0.4);
+:root{
+  --gold:#f5c842;--gold-dim:rgba(245,200,66,0.55);--gold-faint:rgba(245,200,66,0.12);
+  --bg:#100500;--bg-mid:#1c0900;--bg-card:rgba(255,255,255,0.04);
+  --text:rgba(255,240,200,0.95);--text-mid:rgba(245,220,160,0.8);--text-dim:rgba(245,200,100,0.5);
+  --border:rgba(245,180,50,0.2);--radius:12px;
 }
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
-body { font-family:'DM Sans',sans-serif; background:var(--dark); color:var(--cream); overflow-x:hidden; }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Lora',Georgia,serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:rgba(245,200,66,0.2);border-radius:4px}
 
-/* ── NAV ── */
-nav {
-  position:fixed; top:0; left:0; right:0; z-index:200;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:14px 40px;
-  background:rgba(26,10,0,0.9); backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-}
-.nav-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
-.nav-om { font-size:20px; color:var(--gold); }
-.nav-name { font-family:'Yatra One',cursive; font-size:19px; color:var(--cream); letter-spacing:1px; }
-.nav-right { display:flex; align-items:center; gap:20px; }
-.nav-right a { color:var(--muted); text-decoration:none; font-size:13px; font-weight:500; transition:color 0.2s; }
-.nav-right a:hover { color:var(--gold); }
-.btn-signin {
-  background:linear-gradient(135deg,var(--saffron),var(--gold));
-  color:var(--dark) !important; padding:8px 18px; border-radius:8px;
-  font-weight:700; font-size:12px !important; letter-spacing:0.5px;
-}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(16,5,0,0.92);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--border)}
+.nav-logo{font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--gold);letter-spacing:2px;display:flex;align-items:center;gap:8px}
+.nav-logo .om{font-size:22px;animation:glow 3s ease-in-out infinite}
+@keyframes glow{0%,100%{text-shadow:0 0 8px rgba(245,200,66,0.3)}50%{text-shadow:0 0 24px rgba(245,200,66,0.8)}}
+.nav-right{display:flex;gap:8px;align-items:center}
+.btn-sm{padding:7px 16px;border-radius:20px;font-size:13px;cursor:pointer;font-family:'Lora',serif;transition:all .2s}
+.btn-outline{background:transparent;border:0.5px solid var(--gold-dim);color:var(--gold)}
+.btn-outline:hover{background:var(--gold-faint)}
+.btn-gold{background:var(--gold);border:none;color:#1a0800;font-weight:500}
+.btn-gold:hover{background:#ffd84a}
+.nav-user{display:flex;align-items:center;gap:8px;cursor:pointer}
+.nav-avatar{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--gold);object-fit:cover}
+.nav-username{font-size:13px;color:var(--gold-dim);max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* ── HERO ── */
-.hero {
-  min-height:100vh; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; text-align:center;
-  padding:120px 24px 80px; position:relative; overflow:hidden;
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(212,160,23,0.1) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 90%, rgba(139,26,26,0.08) 0%, transparent 50%),
-    var(--dark);
-}
-.hero-bg-om {
-  position:absolute; font-size:700px; font-family:'Tiro Devanagari Sanskrit',serif;
-  color:rgba(212,160,23,0.03); top:50%; left:50%;
-  transform:translate(-50%,-50%); pointer-events:none; user-select:none; line-height:1;
-}
-.hero-badge {
-  display:inline-flex; align-items:center; gap:8px;
-  background:rgba(212,160,23,0.1); border:1px solid var(--border);
-  border-radius:100px; padding:6px 16px; font-size:12px; color:var(--gold);
-  margin-bottom:28px; letter-spacing:0.8px; font-weight:500;
-  animation: fadeUp 0.6s ease both 0.1s;
-}
-.hero h1 {
-  font-family:'Yatra One',cursive;
-  font-size:clamp(56px,11vw,104px); line-height:1.02;
-  background:linear-gradient(135deg,var(--gold-light) 0%,var(--saffron) 55%,var(--deep-red) 100%);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-  margin-bottom:10px; animation:fadeUp 0.6s ease both 0.2s;
-}
-.hero-sub-title {
-  font-family:'Tiro Devanagari Sanskrit',serif; font-style:italic;
-  font-size:clamp(15px,2.5vw,20px); color:var(--muted);
-  margin-bottom:22px; letter-spacing:1.5px;
-  animation:fadeUp 0.6s ease both 0.3s;
-}
-.hero-desc {
-  max-width:520px; font-size:15px; color:rgba(255,248,238,0.6);
-  line-height:1.75; margin-bottom:40px;
-  animation:fadeUp 0.6s ease both 0.4s;
-}
-.hero-btns { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; animation:fadeUp 0.6s ease both 0.5s; }
-.btn-primary {
-  background:linear-gradient(135deg,var(--saffron),var(--gold));
-  color:var(--dark); padding:13px 30px; border-radius:10px;
-  font-weight:700; font-size:14px; text-decoration:none; border:none; cursor:pointer;
-  box-shadow:0 0 28px rgba(255,107,0,0.25); transition:all 0.2s;
-}
-.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 36px rgba(255,107,0,0.4); }
-.btn-outline {
-  background:transparent; color:var(--cream); padding:13px 30px;
-  border-radius:10px; font-size:14px; font-weight:500; text-decoration:none;
-  border:1px solid var(--border); cursor:pointer; transition:all 0.2s;
-}
-.btn-outline:hover { border-color:var(--gold); background:rgba(212,160,23,0.06); }
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 20px 60px;position:relative;overflow:hidden}
+.mandala{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(680px,90vw);height:min(680px,90vw);opacity:0.05;pointer-events:none;animation:spin 80s linear infinite}
+@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.hero-om{font-size:52px;margin-bottom:12px;animation:glow 3s ease-in-out infinite}
+.hero h1{font-family:'Cinzel',serif;font-size:clamp(32px,8vw,68px);font-weight:700;color:var(--gold);letter-spacing:4px;line-height:1.1;margin-bottom:12px}
+.hero-sub{font-family:'Cinzel',serif;font-size:clamp(11px,2.5vw,17px);font-weight:400;letter-spacing:6px;color:var(--text-dim);margin-bottom:18px}
+.hero-desc{max-width:520px;font-size:clamp(14px,2vw,16px);color:var(--text-mid);line-height:1.85;margin:0 auto 34px;font-style:italic}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.btn-primary{padding:13px 34px;background:var(--gold);color:#1a0800;border:none;border-radius:30px;font-family:'Cinzel',serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:1px;transition:all .25s}
+.btn-primary:hover{background:#ffd84a;transform:translateY(-2px)}
+.btn-secondary{padding:13px 34px;background:transparent;color:var(--gold);border:1px solid var(--gold-dim);border-radius:30px;font-family:'Lora',serif;font-size:14px;cursor:pointer;transition:all .25s}
+.btn-secondary:hover{background:var(--gold-faint)}
+.stats{display:flex;gap:36px;justify-content:center;flex-wrap:wrap}
+.stat-num{font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--gold)}
+.stat-label{font-size:11px;color:var(--text-dim);letter-spacing:1px;margin-top:2px}
 
-/* ── CHAT SECTION ── */
-.chat-section {
-  padding:90px 40px; border-top:1px solid var(--border); border-bottom:1px solid var(--border);
-  background:radial-gradient(ellipse at 50% 50%, rgba(212,160,23,0.05) 0%, transparent 65%);
-}
-.chat-container { max-width:840px; margin:0 auto; }
-.chat-header-area { text-align:center; margin-bottom:36px; }
-.section-label { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:var(--saffron); font-weight:600; }
-.chat-header-area h2 { font-family:'Yatra One',cursive; font-size:clamp(28px,5vw,44px); color:var(--cream); margin:10px 0 10px; }
-.chat-header-area p { font-size:14px; color:rgba(255,248,238,0.5); }
+.votd{background:rgba(245,180,30,0.06);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:20px 24px;text-align:center}
+.votd-tag{font-size:11px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;font-family:'Cinzel',serif;margin-bottom:9px}
+.votd-text{font-size:clamp(13px,2vw,15px);font-style:italic;color:var(--text-mid);max-width:660px;margin:0 auto;line-height:1.75}
+.votd-src{font-size:11px;color:var(--text-dim);margin-top:7px}
 
-/* Chat Window */
-.chat-window {
-  background:var(--dark3); border:1px solid var(--border);
-  border-radius:20px; overflow:hidden;
-  box-shadow:0 32px 80px rgba(0,0,0,0.5);
-}
-.chat-topbar {
-  background:rgba(212,160,23,0.07); border-bottom:1px solid var(--border);
-  padding:14px 20px; display:flex; align-items:center; justify-content:space-between;
-}
-.chat-topbar-left { display:flex; align-items:center; gap:10px; }
-.traffic-dots { display:flex; gap:6px; }
-.traffic-dots span { width:10px; height:10px; border-radius:50%; }
-.traffic-dots span:nth-child(1) { background:#FF5F57; }
-.traffic-dots span:nth-child(2) { background:#FFBD2E; }
-.traffic-dots span:nth-child(3) { background:#28CA41; }
-.chat-title-bar { font-family:'Yatra One',cursive; font-size:14px; color:var(--gold); margin-left:6px; }
-.chat-mode-badge {
-  font-size:11px; padding:3px 10px; border-radius:100px;
-  border:1px solid var(--border); color:var(--muted); letter-spacing:0.5px;
-}
+.section{padding:65px 20px;max-width:1060px;margin:0 auto}
+.sec-title{text-align:center;margin-bottom:46px}
+.sec-title h2{font-family:'Cinzel',serif;font-size:clamp(20px,4vw,32px);color:var(--gold);letter-spacing:2px}
+.sec-title p{color:var(--text-dim);margin-top:9px;font-size:13px;font-style:italic}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.feat-card{background:var(--bg-card);border:0.5px solid var(--border);border-radius:var(--radius);padding:24px 20px;transition:all .25s}
+.feat-card:hover{background:rgba(245,180,30,0.07);border-color:rgba(245,200,66,0.4);transform:translateY(-3px)}
+.feat-icon{font-size:26px;margin-bottom:11px}
+.feat-title{font-family:'Cinzel',serif;font-size:14px;color:var(--gold);margin-bottom:8px;letter-spacing:1px}
+.feat-desc{font-size:13px;color:var(--text-mid);line-height:1.7}
 
-/* Messages */
-.chat-messages {
-  padding:24px 20px; display:flex; flex-direction:column; gap:18px;
-  min-height:380px; max-height:480px; overflow-y:auto;
-}
-.chat-messages::-webkit-scrollbar { width:4px; }
-.chat-messages::-webkit-scrollbar-track { background:transparent; }
-.chat-messages::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+.pricing-section{padding:65px 20px;background:rgba(255,255,255,0.01)}
+.pricing-inner{max-width:860px;margin:0 auto}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:46px}
+.price-card{background:var(--bg-card);border:0.5px solid var(--border);border-radius:var(--radius);padding:28px 20px;text-align:center;position:relative;transition:all .25s}
+.price-card.pop{border:1.5px solid var(--gold);background:rgba(245,180,30,0.05)}
+.pop-badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--gold);color:#1a0800;font-size:10px;font-weight:600;padding:3px 12px;border-radius:11px;font-family:'Cinzel',serif;white-space:nowrap}
+.price-name{font-family:'Cinzel',serif;font-size:16px;color:var(--gold);letter-spacing:2px;margin-bottom:7px}
+.price-amt{font-family:'Cinzel',serif;font-size:38px;font-weight:700;color:var(--text);margin:12px 0 3px}
+.price-amt span{font-size:15px;color:var(--text-dim)}
+.price-period{font-size:12px;color:var(--text-dim);margin-bottom:20px}
+.price-list{list-style:none;margin-bottom:22px;text-align:left}
+.price-list li{font-size:13px;color:var(--text-mid);padding:5px 0;border-bottom:0.5px solid rgba(245,180,50,0.1);display:flex;align-items:center;gap:7px;line-height:1.5}
+.price-list li::before{content:'✦';color:var(--gold);font-size:9px;flex-shrink:0}
+.price-list li.off{color:rgba(245,200,100,0.3)}
+.price-list li.off::before{color:rgba(245,200,66,0.15)}
+.btn-plan{width:100%;padding:11px;border-radius:24px;font-family:'Lora',serif;font-size:13px;cursor:pointer;transition:all .2s;border:1px solid var(--gold-dim);color:var(--gold);background:transparent}
+.btn-plan:hover{background:var(--gold-faint)}
+.btn-plan.gold{background:var(--gold);color:#1a0800;border:none;font-weight:500}
+.btn-plan.gold:hover{background:#ffd84a}
 
-.msg { max-width:82%; display:flex; flex-direction:column; gap:4px; }
-.msg-user { align-self:flex-end; }
-.msg-ai { align-self:flex-start; }
-.msg-user .bubble {
-  background:rgba(255,107,0,0.14); border:1px solid rgba(255,107,0,0.2);
-  border-radius:16px 16px 4px 16px; padding:11px 15px;
-  font-size:14px; color:var(--cream); line-height:1.6;
-}
-.msg-ai .bubble {
-  background:rgba(44,26,0,0.8); border:1px solid var(--border);
-  border-radius:16px 16px 16px 4px; padding:14px 16px;
-  font-size:14px; color:rgba(255,248,238,0.88); line-height:1.75;
-}
-.msg-ai .bubble .ai-source {
-  font-size:11px; color:var(--gold); font-weight:600;
-  letter-spacing:0.5px; display:block; margin-bottom:8px;
-  font-family:'DM Sans',sans-serif; font-style:normal;
-}
-.msg-ai .bubble .ai-verse {
-  font-family:'Tiro Devanagari Sanskrit',serif; font-style:italic;
-  color:rgba(212,160,23,0.85); font-size:13px; display:block;
-  border-left:2px solid var(--gold); padding-left:10px;
-  margin-bottom:10px; line-height:1.6;
-}
-.msg-ai .bubble .ai-body { display:block; }
-.msg-ai .bubble .ai-lesson {
-  display:block; margin-top:10px; padding:8px 12px;
-  background:rgba(212,160,23,0.07); border-radius:8px;
-  font-size:12px; color:rgba(255,248,238,0.6); font-style:italic;
-}
-.msg-label { font-size:11px; color:var(--muted); padding:0 4px; }
-.typing-indicator { display:flex; gap:5px; align-items:center; padding:4px 0; }
-.typing-indicator span {
-  width:7px; height:7px; border-radius:50%; background:var(--gold);
-  animation:typing 1.2s infinite ease-in-out;
-}
-.typing-indicator span:nth-child(2) { animation-delay:0.2s; }
-.typing-indicator span:nth-child(3) { animation-delay:0.4s; }
-@keyframes typing { 0%,60%,100% { opacity:0.2; transform:scale(0.8); } 30% { opacity:1; transform:scale(1); } }
+.chat-section{padding:65px 20px;max-width:760px;margin:0 auto}
+.chat-box{background:var(--bg-mid);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.chat-hdr{padding:13px 16px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px}
+.chat-hdr-l{display:flex;align-items:center;gap:9px}
+.chat-hdr-om{font-size:19px;animation:glow 3s ease-in-out infinite}
+.chat-title{font-family:'Cinzel',serif;font-size:13px;color:var(--gold);letter-spacing:2px}
+.chat-subtitle{font-size:11px;color:var(--text-dim);font-style:italic}
+.chat-hdr-r{display:flex;gap:6px;align-items:center}
+.lang-btn{background:transparent;border:0.5px solid rgba(245,200,66,0.2);color:rgba(245,200,66,0.5);padding:3px 9px;border-radius:10px;font-size:11px;cursor:pointer;transition:all .2s;font-family:'Lora',serif}
+.lang-btn.act{background:rgba(245,200,66,0.15);border-color:rgba(245,200,66,0.5);color:var(--gold)}
+.mic-btn{width:27px;height:27px;border-radius:50%;border:0.5px solid rgba(245,200,66,0.22);background:transparent;color:rgba(245,200,66,0.6);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .2s}
+.mic-btn.rec{background:rgba(220,50,50,0.2);border-color:rgba(220,100,100,0.5);color:#ff6b6b;animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
 
-/* Login Wall */
-.login-wall {
-  position:absolute; inset:0; border-radius:inherit;
-  background:linear-gradient(to bottom, rgba(26,10,0,0.1) 0%, rgba(26,10,0,0.96) 45%);
-  display:flex; align-items:flex-end; justify-content:center;
-  padding-bottom:40px; z-index:10;
-}
-.login-wall-inner {
-  text-align:center; padding:32px 32px 0;
-}
-.login-wall-inner h3 { font-family:'Yatra One',cursive; font-size:22px; color:var(--gold); margin-bottom:8px; }
-.login-wall-inner p { font-size:13px; color:rgba(255,248,238,0.55); margin-bottom:24px; line-height:1.6; }
-.btn-google {
-  display:inline-flex; align-items:center; gap:10px;
-  background:var(--cream); color:#1A0A00; padding:11px 24px;
-  border-radius:10px; font-weight:700; font-size:14px; border:none; cursor:pointer;
-  font-family:'DM Sans',sans-serif; transition:all 0.2s; text-decoration:none;
-  box-shadow:0 4px 20px rgba(0,0,0,0.3);
-}
-.btn-google:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,0,0,0.4); }
-.btn-google svg { width:18px; height:18px; flex-shrink:0; }
-.login-wall-inner small { display:block; margin-top:12px; font-size:11px; color:var(--muted); }
+.msgs{height:320px;overflow-y:auto;padding:13px;display:flex;flex-direction:column;gap:11px;scrollbar-width:thin;scrollbar-color:rgba(245,200,66,0.12) transparent}
+.welcome-msg{text-align:center;padding:18px 10px}
+.welcome-om{font-size:32px;display:block;margin-bottom:9px}
+.welcome-msg p{color:var(--text-mid);font-size:13px;line-height:1.85;font-style:italic}
+.welcome-msg p span{color:var(--gold);font-weight:500}
 
-/* Chat messages area wrapper */
-.chat-messages-wrap { position:relative; }
+.msg{display:flex;gap:7px;animation:fi .3s ease}
+@keyframes fi{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.msg.user{flex-direction:row-reverse}
+.av{width:27px;height:27px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;margin-top:2px}
+.msg.user .av{background:rgba(245,200,66,0.12);border:0.5px solid rgba(245,200,66,0.28);color:var(--gold);font-size:9px;font-family:'Cinzel',serif}
+.msg.ai .av{background:rgba(180,80,20,0.28);border:0.5px solid rgba(245,150,50,0.35);font-size:13px}
+.bubble{max-width:86%;padding:9px 12px;border-radius:13px;font-size:13px;line-height:1.75}
+.msg.user .bubble{background:rgba(245,200,66,0.09);border:0.5px solid rgba(245,200,66,0.2);color:var(--text);border-top-right-radius:3px}
+.msg.ai .bubble{background:rgba(255,255,255,0.05);border:0.5px solid rgba(245,150,50,0.16);color:rgba(245,225,185,0.95);border-top-left-radius:3px}
+.msg.ai .bubble .vrs{border-left:2px solid rgba(245,200,66,0.5);padding-left:10px;margin:7px 0;color:#f5d070;font-style:italic;font-size:12px}
+.msg.ai .bubble p{margin-bottom:6px}.msg.ai .bubble p:last-child{margin-bottom:0}
+.thinking{display:flex;align-items:center;gap:4px;padding:8px 12px;background:rgba(255,255,255,0.04);border:0.5px solid rgba(245,150,50,0.12);border-radius:13px;border-top-left-radius:3px;width:62px}
+.dot{width:5px;height:5px;border-radius:50%;background:rgba(245,200,66,0.5);animation:bo 1.2s ease-in-out infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes bo{0%,80%,100%{transform:scale(.7);opacity:.4}40%{transform:scale(1);opacity:1}}
 
-/* Input Bar */
-.chat-input-area {
-  border-top:1px solid var(--border); padding:14px 16px;
-  display:flex; gap:10px; align-items:flex-end;
-  background:rgba(26,10,0,0.6);
-}
-.chat-input-area textarea {
-  flex:1; background:rgba(255,248,238,0.05); border:1px solid var(--border);
-  border-radius:10px; padding:10px 14px; color:var(--cream);
-  font-size:14px; font-family:'DM Sans',sans-serif; resize:none;
-  outline:none; line-height:1.5; min-height:42px; max-height:120px;
-  transition:border-color 0.2s;
-}
-.chat-input-area textarea:focus { border-color:var(--gold); }
-.chat-input-area textarea::placeholder { color:var(--muted); }
-.chat-input-area textarea:disabled { opacity:0.4; cursor:not-allowed; }
-.btn-send {
-  background:linear-gradient(135deg,var(--saffron),var(--gold));
-  border:none; border-radius:10px; padding:10px 16px;
-  color:var(--dark); font-weight:700; cursor:pointer; font-size:16px;
-  transition:all 0.2s; flex-shrink:0; height:42px;
-}
-.btn-send:hover { transform:scale(1.05); }
-.btn-send:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
-.chat-footer-note {
-  padding:10px 16px; font-size:11px; color:var(--muted);
-  text-align:center; border-top:1px solid var(--border);
-  background:rgba(26,10,0,0.4);
-}
-.questions-left {
-  padding:8px 16px; font-size:12px; color:rgba(255,248,238,0.4);
-  text-align:right; background:rgba(26,10,0,0.3); border-top:1px solid var(--border);
-}
-.questions-left span { color:var(--gold); font-weight:600; }
+.suggs{padding:6px 13px 8px;display:flex;flex-wrap:wrap;gap:6px}
+.sug{background:rgba(245,200,66,0.07);border:0.5px solid rgba(245,200,66,0.2);color:rgba(245,210,140,0.8);padding:4px 10px;border-radius:15px;font-size:11px;cursor:pointer;font-family:'Lora',serif;transition:all .2s;white-space:nowrap}
+.sug:hover{background:rgba(245,200,66,0.15);color:var(--gold)}
 
-/* Mode selector */
-.mode-selector { display:flex; gap:8px; padding:12px 16px; border-bottom:1px solid var(--border); flex-wrap:wrap; }
-.mode-pill {
-  padding:5px 13px; border-radius:100px; font-size:12px; font-weight:500;
-  cursor:pointer; border:1px solid var(--border); background:transparent;
-  color:var(--muted); font-family:'DM Sans',sans-serif; transition:all 0.2s;
-}
-.mode-pill.active { background:rgba(212,160,23,0.12); border-color:var(--gold); color:var(--gold); }
-.mode-pill:hover:not(.active) { border-color:rgba(212,160,23,0.4); color:rgba(255,248,238,0.7); }
+.limit-bar{padding:6px 14px;background:rgba(245,180,30,0.04);border-top:0.5px solid rgba(245,180,50,0.1);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.limit-txt{font-size:12px;color:var(--text-dim)}
+.limit-txt span{color:var(--gold);font-weight:500}
+.upgrade-link{font-size:11px;color:var(--gold);cursor:pointer;text-decoration:underline;font-style:italic}
 
-/* ── FEATURES ── */
-.features-section { padding:90px 40px; max-width:1200px; margin:0 auto; }
-.features-section .section-header { text-align:center; margin-bottom:56px; }
-.section-title { font-family:'Yatra One',cursive; font-size:clamp(30px,5vw,50px); color:var(--cream); line-height:1.15; margin:10px 0 14px; }
-.section-desc { font-size:15px; color:rgba(255,248,238,0.5); max-width:500px; margin:0 auto; line-height:1.7; }
-.modes-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:18px; }
-.mode-card {
-  background:rgba(44,26,0,0.45); border:1px solid var(--border);
-  border-radius:16px; padding:26px; cursor:pointer; position:relative;
-  overflow:hidden; transition:all 0.25s;
-}
-.mode-card:hover { border-color:rgba(212,160,23,0.5); transform:translateY(-4px); background:rgba(44,26,0,0.65); }
-.mode-icon { font-size:28px; margin-bottom:12px; display:block; }
-.mode-card h3 { font-family:'Yatra One',cursive; font-size:17px; color:var(--gold-light); margin-bottom:7px; }
-.mode-card p { font-size:13px; color:rgba(255,248,238,0.5); line-height:1.65; }
-.mode-eg { margin-top:12px; padding:7px 11px; background:rgba(255,107,0,0.07); border-left:2px solid rgba(255,107,0,0.4); border-radius:0 6px 6px 0; font-size:11px; color:rgba(255,248,238,0.45); font-style:italic; }
+.voice-status{font-size:11px;color:rgba(220,100,100,0.7);text-align:center;padding:2px 0 4px;font-style:italic;display:none}
+.input-row{padding:10px 12px;border-top:0.5px solid var(--border);display:flex;gap:7px;align-items:flex-end}
+.inp{flex:1;background:rgba(255,255,255,0.06);border:0.5px solid rgba(245,200,66,0.2);border-radius:10px;padding:8px 12px;color:rgba(255,240,200,0.95);font-family:'Lora',serif;font-size:13px;resize:none;min-height:38px;max-height:100px;outline:none;transition:border-color .2s}
+.inp::placeholder{color:rgba(245,200,66,0.27);font-style:italic}
+.inp:focus{border-color:rgba(245,200,66,0.5)}
+.mic-inp-btn{width:35px;height:35px;border-radius:50%;background:rgba(255,255,255,0.05);border:0.5px solid rgba(245,200,66,0.2);color:rgba(245,200,66,0.6);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:all .2s}
+.mic-inp-btn.rec{background:rgba(220,50,50,0.18);border-color:rgba(220,80,80,0.4);color:#ff7070;animation:pulse 1s ease-in-out infinite}
+.send{width:35px;height:35px;border-radius:50%;background:rgba(245,180,30,0.12);border:0.5px solid rgba(245,200,66,0.35);color:var(--gold);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;transition:all .2s}
+.send:hover{background:rgba(245,180,30,0.24)}
+.send:disabled{opacity:.3;cursor:not-allowed}
 
-/* ── PRICING ── */
-.pricing-section {
-  padding:90px 40px; border-top:1px solid var(--border);
-  background:radial-gradient(ellipse at 50% 100%, rgba(212,160,23,0.05) 0%, transparent 55%);
-}
-.pricing-inner { max-width:960px; margin:0 auto; }
-.pricing-inner .section-header { text-align:center; margin-bottom:52px; }
-.pricing-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:22px; }
-.price-card {
-  background:rgba(44,26,0,0.55); border:1px solid var(--border);
-  border-radius:20px; padding:32px 26px; text-align:center;
-  transition:transform 0.2s;
-}
-.price-card:hover { transform:translateY(-5px); }
-.price-card.popular { border-color:rgba(212,160,23,0.6); background:rgba(212,160,23,0.06); position:relative; }
-.popular-tag {
-  position:absolute; top:-13px; left:50%; transform:translateX(-50%);
-  background:linear-gradient(135deg,var(--saffron),var(--gold));
-  color:var(--dark); font-size:10px; font-weight:700;
-  padding:4px 14px; border-radius:100px; letter-spacing:1px; white-space:nowrap;
-}
-.price-name { font-family:'Yatra One',cursive; font-size:20px; color:var(--cream); margin-bottom:6px; }
-.price-num { font-size:46px; font-weight:700; color:var(--gold); line-height:1; margin:14px 0 3px; }
-.price-num span { font-size:16px; font-weight:400; color:var(--muted); }
-.price-per { font-size:12px; color:var(--muted); margin-bottom:6px; }
-.price-offer-tag { font-size:11px; color:var(--saffron); font-weight:600; background:rgba(255,107,0,0.1); border-radius:5px; padding:3px 9px; display:inline-block; margin-bottom:20px; }
-.price-features { list-style:none; text-align:left; margin-bottom:24px; display:flex; flex-direction:column; gap:9px; }
-.price-features li { font-size:13px; color:rgba(255,248,238,0.65); display:flex; align-items:center; gap:9px; }
-.price-features li::before { content:'✦'; color:var(--gold); font-size:9px; flex-shrink:0; }
-.btn-plan { width:100%; padding:12px; border-radius:10px; font-weight:600; font-size:13px; cursor:pointer; border:none; font-family:'DM Sans',sans-serif; transition:all 0.2s; }
-.btn-plan-outline { background:transparent; color:var(--cream); border:1px solid var(--border); }
-.btn-plan-outline:hover { border-color:var(--gold); }
-.btn-plan-gold { background:linear-gradient(135deg,var(--saffron),var(--gold)); color:var(--dark); }
-.btn-plan-gold:hover { box-shadow:0 6px 28px rgba(255,107,0,0.3); transform:translateY(-1px); }
+/* MODALS */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;align-items:center;justify-content:center;padding:20px}
+.overlay.show{display:flex}
+.modal{background:#1c0a00;border:1px solid rgba(245,200,66,0.3);border-radius:16px;max-width:400px;width:100%;padding:32px 24px;text-align:center;position:relative}
+.modal-x{position:absolute;top:12px;right:14px;background:transparent;border:none;color:var(--text-dim);font-size:19px;cursor:pointer}
+.modal-om{font-size:36px;margin-bottom:9px;animation:glow 3s ease-in-out infinite}
+.modal h3{font-family:'Cinzel',serif;font-size:18px;color:var(--gold);margin-bottom:7px;letter-spacing:1px}
+.modal-desc{font-size:13px;color:var(--text-mid);line-height:1.7;margin-bottom:20px;font-style:italic}
 
-/* ── LEGAL FOOTER STRIP ── */
-.legal-strip {
-  border-top:1px solid var(--border);
-  padding:24px 40px; text-align:center;
-  background:rgba(26,10,0,0.6);
-}
-.legal-strip-links { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-bottom:10px; }
-.legal-strip-links a { color:var(--muted); text-decoration:none; font-size:12px; transition:color 0.2s; }
-.legal-strip-links a:hover { color:var(--gold); }
+/* Google Sign-In button container */
+.google-btn-wrap{display:flex;justify-content:center;margin-bottom:14px}
+.or-divider{font-size:12px;color:var(--text-dim);margin:12px 0;position:relative}
+.or-divider::before,.or-divider::after{content:'';position:absolute;top:50%;width:38%;height:0.5px;background:rgba(245,180,50,0.2)}
+.or-divider::before{left:0}.or-divider::after{right:0}
 
-/* Legal Modal */
-.legal-modal-overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,0.75);
-  backdrop-filter:blur(8px); z-index:300;
-  display:none; align-items:flex-end; justify-content:center;
-}
-.legal-modal-overlay.open { display:flex; }
-.legal-modal {
-  background:var(--dark2); border:1px solid var(--border); border-bottom:none;
-  border-radius:20px 20px 0 0; padding:40px 40px 60px;
-  max-width:680px; width:100%; max-height:80vh; overflow-y:auto; position:relative;
-}
-.legal-modal::-webkit-scrollbar { width:4px; }
-.legal-modal::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
-.legal-modal h2 { font-family:'Yatra One',cursive; font-size:24px; color:var(--gold); margin-bottom:20px; }
-.legal-modal h3 { font-size:14px; font-weight:600; color:var(--cream); margin:20px 0 7px; }
-.legal-modal p, .legal-modal li { font-size:13px; color:rgba(255,248,238,0.6); line-height:1.8; }
-.legal-modal ul { padding-left:18px; margin-top:6px; }
-.legal-modal a { color:var(--gold); }
-.legal-close { position:sticky; top:0; float:right; background:rgba(44,26,0,0.9); border:1px solid var(--border); border-radius:8px; padding:6px 12px; color:var(--muted); cursor:pointer; font-size:13px; font-family:'DM Sans',sans-serif; }
+.modal-plans{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.mplan{border:0.5px solid var(--border);border-radius:10px;padding:14px 10px;cursor:pointer;transition:all .2s;text-align:center}
+.mplan:hover,.mplan.sel{border-color:var(--gold);background:var(--gold-faint)}
+.mplan-badge{font-size:10px;color:#1a0800;background:var(--gold);padding:2px 8px;border-radius:8px;font-family:'Cinzel',serif;display:inline-block;margin-bottom:4px}
+.mplan-name{font-family:'Cinzel',serif;font-size:12px;color:var(--gold);margin-bottom:3px}
+.mplan-price{font-size:20px;font-weight:700;color:var(--text);font-family:'Cinzel',serif}
+.mplan-price span{font-size:11px;color:var(--text-dim)}
+.mplan-note{font-size:11px;color:var(--text-dim);margin-top:3px;line-height:1.4}
+.btn-pay{width:100%;padding:12px;background:var(--gold);color:#1a0800;border:none;border-radius:22px;font-family:'Cinzel',serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:1px;transition:all .2s;margin-bottom:8px}
+.btn-pay:hover{background:#ffd84a}
+.modal-note{font-size:11px;color:var(--text-dim);font-style:italic}
 
-/* ── FOOTER ── */
-footer {
-  background:rgba(26,10,0,0.98); border-top:1px solid var(--border);
-  padding:44px 40px; text-align:center;
-}
-.footer-brand { font-family:'Yatra One',cursive; font-size:22px; color:var(--gold); margin-bottom:5px; }
-.footer-tag { font-size:12px; color:var(--muted); margin-bottom:20px; }
-.footer-disclaimer {
-  max-width:640px; margin:0 auto 20px;
-  background:rgba(212,160,23,0.05); border:1px solid var(--border);
-  border-radius:10px; padding:16px 20px;
-  font-size:11px; color:rgba(255,248,238,0.38); line-height:1.7; text-align:left;
-}
-.footer-disclaimer strong { color:rgba(212,160,23,0.6); display:block; margin-bottom:4px; }
-.footer-copy { font-size:11px; color:rgba(255,248,238,0.25); }
+/* Customer table */
+.admin-section{padding:65px 20px;max-width:900px;margin:0 auto;display:none}
+.admin-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:20px}
+.admin-table th{background:rgba(245,180,30,0.1);color:var(--gold);padding:10px 12px;text-align:left;font-family:'Cinzel',serif;font-weight:400;letter-spacing:1px;border-bottom:0.5px solid var(--border)}
+.admin-table td{padding:10px 12px;border-bottom:0.5px solid rgba(245,180,50,0.08);color:var(--text-mid)}
+.badge-free{background:rgba(245,200,66,0.1);color:rgba(245,200,66,0.7);padding:2px 8px;border-radius:8px;font-size:11px}
+.badge-premium{background:rgba(100,200,100,0.1);color:rgba(100,220,100,0.8);padding:2px 8px;border-radius:8px;font-size:11px}
 
-/* ── MODAL (sign in / upgrade) ── */
-.modal-overlay {
-  position:fixed; inset:0; background:rgba(0,0,0,0.7);
-  backdrop-filter:blur(8px); z-index:250;
-  display:none; align-items:center; justify-content:center; padding:20px;
-}
-.modal-overlay.open { display:flex; }
-.modal-box {
-  background:var(--dark2); border:1px solid var(--border-strong);
-  border-radius:20px; padding:40px 36px; max-width:420px; width:100%; position:relative; text-align:center;
-}
-.modal-box h2 { font-family:'Yatra One',cursive; font-size:26px; color:var(--gold); margin-bottom:10px; }
-.modal-box p { font-size:14px; color:rgba(255,248,238,0.6); line-height:1.7; margin-bottom:20px; }
-.modal-close-btn { position:absolute; top:14px; right:14px; background:none; border:none; color:var(--muted); font-size:18px; cursor:pointer; }
-.modal-close-btn:hover { color:var(--cream); }
+footer{padding:32px 20px;text-align:center;border-top:0.5px solid var(--border)}
+.f-om{font-size:24px;display:block;margin-bottom:7px}
+footer p{font-size:12px;color:var(--text-dim);line-height:1.9}
+footer a{color:var(--gold-dim);text-decoration:none}
+footer a:hover{color:var(--gold)}
 
-/* ── ANIMATIONS ── */
-@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-
-/* ── RESPONSIVE ── */
-@media (max-width:768px) {
-  nav { padding:12px 18px; }
-  .nav-right a:not(.btn-signin) { display:none; }
-  .chat-section, .features-section, .pricing-section { padding:70px 18px; }
-  .legal-modal { padding:28px 22px 50px; }
-  footer { padding:36px 18px; }
-  .legal-strip { padding:20px 18px; }
+@media(max-width:580px){
+  .hero h1{font-size:34px;letter-spacing:2px}
+  nav{padding:12px 14px}
+  .modal-plans{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <a href="#" class="nav-brand">
-    <span class="nav-om">ॐ</span>
-    <span class="nav-name">HinduAI</span>
-  </a>
-  <div class="nav-right">
-    <a href="#features">Features</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#" onclick="openLegal('privacy'); return false;">Privacy</a>
-    <a href="/cdn-cgi/l/email-protection#6b181e1b1b04191f2b0302050f1e0a02450205">Contact</a>
-    <button class="btn-signin" id="navSignInBtn" onclick="openSignIn()">Sign In ✦</button>
-    <span id="navUserArea" style="display:none;align-items:center;gap:10px;"></span>
+  <div class="nav-logo"><span class="om">ॐ</span> HINDU AI</div>
+  <div class="nav-right" id="nav-right">
+    <button class="btn-sm btn-outline" onclick="scrollToChat()">Try Free</button>
+    <button class="btn-sm btn-gold" onclick="showPayModal()">Upgrade ✦</button>
+    <button class="btn-sm btn-outline" onclick="showLoginModal()" id="login-btn">Sign In</button>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-bg-om">ॐ</div>
-  <div class="hero-badge">🪔 AI Knowledge Engine for Sanatan Dharma</div>
-  <h1>HinduAI</h1>
-  <p class="hero-sub-title">Wisdom of Dharma · Powered by AI</p>
-  <p class="hero-desc">Explore the Bhagavad Gita, Ramayana, Mahabharata and all of Sanatan Dharma — guided by AI, in Hindi or English, whenever you need it.</p>
+<section class="hero">
+  <svg class="mandala" viewBox="0 0 400 400" fill="none">
+    <circle cx="200" cy="200" r="190" stroke="#f5c842" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="150" stroke="#f5c842" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="110" stroke="#f5c842" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="70" stroke="#f5c842" stroke-width="0.5"/>
+    <circle cx="200" cy="200" r="35" stroke="#f5c842" stroke-width="0.5"/>
+    <line x1="200" y1="10" x2="200" y2="390" stroke="#f5c842" stroke-width="0.4"/>
+    <line x1="10" y1="200" x2="390" y2="200" stroke="#f5c842" stroke-width="0.4"/>
+    <line x1="55" y1="55" x2="345" y2="345" stroke="#f5c842" stroke-width="0.4"/>
+    <line x1="345" y1="55" x2="55" y2="345" stroke="#f5c842" stroke-width="0.4"/>
+    <polygon points="200,15 382,310 18,310" stroke="#f5c842" stroke-width="0.5" fill="none"/>
+    <polygon points="200,385 18,90 382,90" stroke="#f5c842" stroke-width="0.5" fill="none"/>
+  </svg>
+  <div class="hero-om">ॐ</div>
+  <h1>HINDU AI</h1>
+  <div class="hero-sub">Ancient Wisdom · Modern Guidance</div>
+  <p class="hero-desc">Receive guidance from the Bhagavad Gita, Ramayana, Mahabharata and the timeless teachings of Sanatan Dharma — in Hindi or English, whenever you need it.</p>
   <div class="hero-btns">
-    <button class="btn-primary" id="heroSignInBtn">🪔 Begin Your Journey</button>
-    <a href="#pricing" class="btn-outline">See Plans</a>
+    <button class="btn-primary" onclick="scrollToChat()">Ask Your Question</button>
+    <button class="btn-secondary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">View Plans</button>
   </div>
+  <div class="stats">
+    <div><div class="stat-num">5,000+</div><div class="stat-label">Seekers Guided</div></div>
+    <div><div class="stat-num">3</div><div class="stat-label">Sacred Texts</div></div>
+    <div><div class="stat-num">24/7</div><div class="stat-label">Always Available</div></div>
+  </div>
+</section>
+
+<div class="votd">
+  <div class="votd-tag">🌅 Verse of the Day</div>
+  <div class="votd-text" id="votd-text">Loading sacred wisdom...</div>
+  <div class="votd-src" id="votd-src"></div>
 </div>
 
-<!-- CHAT SECTION -->
-<div class="chat-section" id="chat">
-  <div class="chat-container">
-    <div class="chat-header-area">
-      <span class="section-label">Live Guidance</span>
-      <h2>Ask. Reflect. Grow.</h2>
-      <p>Type your question in Hindi or English. HinduAI remembers your conversation and responds thoughtfully.</p>
-    </div>
-
-    <div class="chat-window">
-      <!-- Mode Selector -->
-      <div class="mode-selector">
-        <button class="mode-pill active" onclick="setMode(this,'general')">🕉️ General</button>
-        <button class="mode-pill" onclick="setMode(this,'krishna')">🔱 Ask Krishna</button>
-        <button class="mode-pill" onclick="setMode(this,'scripture')">📖 Scripture</button>
-        <button class="mode-pill" onclick="setMode(this,'story')">🏹 Story Mode</button>
-        <button class="mode-pill" onclick="setMode(this,'meditation')">🧘 Meditation</button>
-      </div>
-
-      <!-- Top bar -->
-      <div class="chat-topbar">
-        <div class="chat-topbar-left">
-          <div class="traffic-dots">
-            <span></span><span></span><span></span>
-          </div>
-          <span class="chat-title-bar">ॐ HinduAI — Your Dharmic Companion</span>
-        </div>
-        <span class="chat-mode-badge" id="modeBadge">General Guidance</span>
-      </div>
-
-      <!-- Messages -->
-      <div class="chat-messages-wrap" style="position:relative;">
-        <div class="chat-messages" id="chatMessages">
-          <div class="msg msg-ai">
-            <span class="msg-label">HinduAI</span>
-            <div class="bubble">
-              <span class="ai-body">🙏 Namaste, dear seeker. I am here to guide you with wisdom from the Bhagavad Gita, Ramayana, Mahabharata and our sacred Dharma.<br><br>Please sign in to begin your journey — your conversation will be remembered across sessions.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- LOGIN WALL (shown when not logged in) -->
-        <div class="login-wall" id="loginWall">
-          <div class="login-wall-inner">
-            <h3>🪔 Begin Your Journey</h3>
-            <p>Sign in to unlock AI-powered guidance from<br>Sanatan Dharma's eternal wisdom.</p>
-            <button class="btn-google" id="googleSignInBtn2">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-              </svg>
-              Continue with Google
-            </button>
-            <small>Free: 5 questions/day · No credit card needed</small>
-          </div>
-        </div>
-      </div>
-
-      <!-- Questions counter (shown when logged in) -->
-      <div class="questions-left" id="questionsLeft" style="display:none;">
-        Free plan: <span id="qCount">5</span> questions remaining today · <a href="#pricing" style="color:var(--saffron);">Upgrade for unlimited</a>
-      </div>
-
-      <!-- Input -->
-      <div class="chat-input-area">
-        <textarea id="chatInput" placeholder="Sign in to ask about Dharma, Gita, life..." rows="1" disabled
-          onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendMessage();}"
-          oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px'"></textarea>
-        <button class="btn-send" id="sendBtn" disabled onclick="sendMessage()">➤</button>
-      </div>
-      <div class="chat-footer-note">🪔 AI-assisted guidance · Not a substitute for a qualified guru or spiritual teacher</div>
-    </div>
+<section class="section">
+  <div class="sec-title"><h2>What Hindu AI Offers</h2><p>Guidance rooted in thousands of years of divine wisdom</p></div>
+  <div class="grid-3">
+    <div class="feat-card"><div class="feat-icon">📖</div><div class="feat-title">Bhagavad Gita</div><div class="feat-desc">Every answer rooted in Krishna's timeless teachings to Arjuna — about duty, action, and the nature of the self.</div></div>
+    <div class="feat-card"><div class="feat-icon">🏹</div><div class="feat-title">Ramayana</div><div class="feat-desc">Lord Rama's journey teaches patience, righteousness and the power of Dharma over any adversity life presents.</div></div>
+    <div class="feat-card"><div class="feat-icon">⚔️</div><div class="feat-title">Mahabharata</div><div class="feat-desc">Real-life dilemmas of duty, family and justice — answered through the epic tales of the Pandavas and Kauravas.</div></div>
+    <div class="feat-card"><div class="feat-icon">🎤</div><div class="feat-title">Voice Input</div><div class="feat-desc">Speak your question in Hindi or English. The guide listens and responds in your chosen language.</div></div>
+    <div class="feat-card"><div class="feat-icon">🌅</div><div class="feat-title">Daily Sacred Verse</div><div class="feat-desc">Start every day with a verse from the Gita, Upanishads or Ramayana to guide your thoughts and actions.</div></div>
+    <div class="feat-card"><div class="feat-icon">🕉️</div><div class="feat-title">Hindi & English</div><div class="feat-desc">Ask in the language of your heart. Hindu AI understands and replies in Hindi or English seamlessly.</div></div>
   </div>
-</div>
+</section>
 
-<!-- FEATURES -->
-<section class="features-section" id="features">
-  <div class="section-header">
-    <span class="section-label">Sacred Modes</span>
-    <h2 class="section-title">One Platform. Infinite Wisdom.</h2>
-    <p class="section-desc">Five powerful ways to explore Sanatan Dharma through AI.</p>
-  </div>
-  <div class="modes-grid">
-    <div class="mode-card">
-      <span class="mode-icon">📖</span>
-      <h3>Scripture Search</h3>
-      <p>Search any Gita verse, Upanishad shloka, or passage by topic. Get the verse, meaning, and real-life application.</p>
-      <div class="mode-eg">"Show Gita verse about duty" → Verse + Meaning + Application</div>
-    </div>
-    <div class="mode-card">
-      <span class="mode-icon">🔱</span>
-      <h3>Ask Krishna Mode</h3>
-      <p>Ask any life question. HinduAI responds in the calm, clear style of Krishna's wisdom from the Bhagavad Gita.</p>
-      <div class="mode-eg">"How to deal with a difficult colleague?" → Krishna's Wisdom</div>
-    </div>
-    <div class="mode-card">
-      <span class="mode-icon">📿</span>
-      <h3>Daily Dharma</h3>
-      <p>Each day, receive a sacred quote, a short story, and a life lesson. Build a daily spiritual habit in 2 minutes.</p>
-      <div class="mode-eg">Today's Dharma Thought → Quote + Story + Lesson</div>
-    </div>
-    <div class="mode-card">
-      <span class="mode-icon">🏹</span>
-      <h3>Story Mode</h3>
-      <p>Stories from Ramayana or Mahabharata by theme — with the moral and its meaning in modern everyday life.</p>
-      <div class="mode-eg">"Ramayana story about patience" → Story + Moral + Meaning</div>
-    </div>
-    <div class="mode-card">
-      <span class="mode-icon">🧘</span>
-      <h3>Meditation Guidance</h3>
-      <p>Receive a personalised meditation — breathing, mantra, and reflection — drawn from Vedic and Yogic traditions.</p>
-      <div class="mode-eg">"5 minute dharma meditation for peace" → Guided practice</div>
-    </div>
-    <div class="mode-card" style="border-color:rgba(212,160,23,0.35);">
-      <span class="mode-icon">🌟</span>
-      <h3>AI Kundali Insight</h3>
-      <p>Basic Jyotish-inspired guidance based on your birth details. Understand your dharmic path and cosmic timing.</p>
-      <div class="mode-eg">Coming soon · Early access for Premium members</div>
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="sec-title"><h2>Choose Your Path</h2><p>Begin for free. Deepen your journey with Seva.</p></div>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Free Seeker</div>
+        <div class="price-amt">₹0<span>/mo</span></div>
+        <div class="price-period">Forever free</div>
+        <ul class="price-list">
+          <li>5 questions per day</li>
+          <li>Hindi &amp; English</li>
+          <li>Verse of the Day</li>
+          <li class="off">Voice input</li>
+          <li class="off">Unlimited questions</li>
+        </ul>
+        <button class="btn-plan" onclick="scrollToChat()">Start Free</button>
+      </div>
+      <div class="price-card pop">
+        <div class="pop-badge">Most Popular</div>
+        <div class="price-name">Seva Plan</div>
+        <div class="price-amt">₹99<span>/mo</span></div>
+        <div class="price-period">Billed monthly</div>
+        <ul class="price-list">
+          <li>Unlimited questions</li>
+          <li>Hindi &amp; English</li>
+          <li>Verse of the Day</li>
+          <li>Voice input</li>
+          <li>Ad-free experience</li>
+        </ul>
+        <button class="btn-plan gold" onclick="openPayment('seva')">Begin Seva — ₹99</button>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Guru Plan</div>
+        <div class="price-amt">₹199<span>/mo</span></div>
+        <div class="price-period">Billed monthly</div>
+        <ul class="price-list">
+          <li>Unlimited questions</li>
+          <li>Hindi &amp; English</li>
+          <li>Verse of the Day</li>
+          <li>Voice input</li>
+          <li>Priority guidance</li>
+        </ul>
+        <button class="btn-plan" onclick="openPayment('guru')">Choose Guru — ₹199</button>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PRICING -->
-<div class="pricing-section" id="pricing">
-  <div class="pricing-inner">
-    <div class="section-header">
-      <span class="section-label">Choose Your Path</span>
-      <h2 class="section-title">Begin Free. Deepen Your Journey.</h2>
-      <p class="section-desc">No tricks. Upgrade only when you're ready.</p>
-    </div>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-name">Free Plan</div>
-        <div class="price-num">₹0<span>/mo</span></div>
-        <div class="price-per">Forever free</div>
-        <ul class="price-features">
-          <li>5 questions per day</li>
-          <li>Hindi & English</li>
-          <li>Voice input</li>
-          <li>General + Scripture modes</li>
-        </ul>
-        <button class="btn-plan btn-plan-outline" id="freeBtn">Start Free</button>
+<section class="chat-section" id="chat">
+  <div class="sec-title"><h2>Ask the Guide</h2><p>Share what is in your heart</p></div>
+  <div class="chat-box">
+    <div class="chat-hdr">
+      <div class="chat-hdr-l">
+        <span class="chat-hdr-om">ॐ</span>
+        <div><div class="chat-title">HINDU AI</div><div class="chat-subtitle">Your dharmic companion</div></div>
       </div>
-      <div class="price-card popular">
-        <div class="popular-tag">🔥 MOST POPULAR</div>
-        <div class="price-name">Premium</div>
-        <div class="price-num">₹199<span>/mo</span></div>
-        <div class="price-per">or ₹1,999/year</div>
-        <div class="price-offer-tag">🎉 Launch Offer: ₹999/year — Save ₹1,000!</div>
-        <ul class="price-features">
-          <li>Unlimited questions</li>
-          <li>All 5 Sacred Modes</li>
-          <li>Ask Krishna Mode</li>
-          <li>Daily Dharma Guidance</li>
-          <li>Story Mode</li>
-          <li>Meditation Guidance</li>
-          <li>Priority responses</li>
-          <li>Early access: AI Kundali</li>
-        </ul>
-        <button class="btn-plan btn-plan-gold" id="premiumBtn">Begin Premium ✦</button>
-      </div>
-      <div class="price-card">
-        <div class="price-name">Annual Seva</div>
-        <div class="price-num">₹999<span>/yr</span></div>
-        <div class="price-per">₹83/month effectively</div>
-        <div class="price-offer-tag">Save ₹1,389 vs monthly</div>
-        <ul class="price-features">
-          <li>Everything in Premium</li>
-          <li>1 year unlimited wisdom</li>
-          <li>Earliest new features</li>
-          <li>Supporter badge</li>
-        </ul>
-        <button class="btn-plan btn-plan-outline" id="annualBtn">Choose Annual Seva</button>
+      <div class="chat-hdr-r">
+        <button class="lang-btn act" id="btn-en" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" id="btn-hi" onclick="setLang('hi')">हिं</button>
+        <button class="mic-btn" id="mic-hdr" onclick="toggleVoice()" title="Voice">🎤</button>
       </div>
     </div>
+    <div class="msgs" id="messages">
+      <div class="welcome-msg" id="welcome">
+        <span class="welcome-om">🪔</span>
+        <p>Namaste, dear seeker.<br>I am here to guide you with wisdom from the <span>Bhagavad Gita</span>, <span>Ramayana</span>, <span>Mahabharata</span> and our sacred Dharma.<br><br>Share what is in your heart.</p>
+      </div>
+    </div>
+    <div class="voice-status" id="vstatus">🎙 Listening... speak now</div>
+    <div class="suggs" id="suggs"></div>
+    <div class="limit-bar" id="limit-bar">
+      <div class="limit-txt">Free: <span id="msgs-left">5</span> questions remaining today</div>
+      <span class="upgrade-link" onclick="showPayModal()">Upgrade for unlimited ✦</span>
+    </div>
+    <div class="input-row">
+      <textarea class="inp" id="inp" placeholder="Ask your question, share your thoughts..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <button class="mic-inp-btn" id="mic-inp" onclick="toggleVoice()">🎤</button>
+      <button class="send" id="send-btn" onclick="sendMsg()">➤</button>
+    </div>
   </div>
-</div>
+</section>
 
-<!-- LEGAL STRIP (compact) -->
-<div class="legal-strip">
-  <div class="legal-strip-links">
-    <a href="#" onclick="openLegal('privacy');return false;">Privacy Policy</a>
-    <a href="#" onclick="openLegal('terms');return false;">Terms of Service</a>
-    <a href="#" onclick="openLegal('refund');return false;">Refund Policy</a>
-    <a href="/cdn-cgi/l/email-protection#40333530302f32340028292e243521296e292e"><span class="__cf_email__" data-cfemail="65161015150a1711250d0c0b0110040c4b0c0b">[email&#160;protected]</span></a>
-  </div>
-</div>
+<!-- Customer Records (visible only when logged in as admin) -->
+<section class="admin-section" id="admin-section">
+  <div class="sec-title"><h2>Customer Records</h2><p>Your paying and free users</p></div>
+  <div id="customer-table-wrap"></div>
+</section>
 
-<!-- FOOTER -->
 <footer>
-  <div class="footer-brand">ॐ HinduAI</div>
-  <div class="footer-tag">Wisdom of Dharma · Powered by AI</div>
-  <div class="footer-disclaimer">
-    <strong>🪔 Spiritual Guidance Disclaimer</strong>
-    HinduAI provides AI-generated responses inspired by Hindu scriptures, philosophy and traditions — for educational and inspirational purposes only. This does not replace guidance from qualified gurus, scholars or spiritual teachers. Interpretations may vary across sampradayas. Approach responses with respect and personal discernment. HinduAI does not promote hatred or disrespect toward any religion or individual.
-  </div>
-  <div class="footer-copy">© 2025 hinduai.in · सत्यमेव जयते · <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7e0d0b0e0e110c0a3e1617101a0b1f17501710">[email&#160;protected]</a></div>
+  <span class="f-om">ॐ</span>
+  <p>Hindu AI — Ancient Wisdom, Modern Guidance<br>Built with devotion. Guided by Dharma.<br><br>
+  <a href="mailto:hello@hinduai.in">hello@hinduai.in</a> &nbsp;·&nbsp; <a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Terms</a><br><br>
+  <span style="font-size:11px;color:rgba(245,200,66,0.25)">© 2025 hinduai.in &nbsp;·&nbsp; सत्यमेव जयते</span></p>
 </footer>
 
-<!-- SIGN IN MODAL -->
-<div class="modal-overlay" id="signInModal">
-  <div class="modal-box">
-    <button class="modal-close-btn" onclick="closeModal('signInModal')">✕</button>
-    <div style="font-size:36px;margin-bottom:12px;">🪔</div>
-    <h2>Welcome, Seeker</h2>
-    <p>Sign in to receive personalised guidance from Sanatan Dharma — your conversations will be remembered.</p>
-    <button class="btn-google" id="googleSignInBtn" style="margin:0 auto;display:inline-flex;">
-      <svg viewBox="0 0 24 24" width="18" height="18">
-        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-      </svg>
-      Continue with Google
-    </button>
-    <p style="font-size:11px;color:var(--muted);margin-top:12px;margin-bottom:0;">Free plan · 5 questions/day · No card needed</p>
+<!-- LOGIN MODAL -->
+<div class="overlay" id="login-modal">
+  <div class="modal">
+    <button class="modal-x" onclick="hideLoginModal()">✕</button>
+    <div class="modal-om">🪔</div>
+    <h3>Welcome Back</h3>
+    <p class="modal-desc">
+      Sign in to save your progress and access your subscription across all devices.
+    </p>
+
+    <div class="google-btn-wrap">
+  <button onclick="window.location.href='/sign-in'" class="google-btn">
+    Sign in
+  </button>
+</div>
+
+    <div class="modal-note">Your data is private and secure 🔒</div>
   </div>
 </div>
 
 <!-- UPGRADE MODAL -->
-<div class="modal-overlay" id="upgradeModal">
-  <div class="modal-box">
-    <button class="modal-close-btn" onclick="closeModal('upgradeModal')">✕</button>
-    <div style="font-size:32px;margin-bottom:12px;">✦</div>
-    <h2>Begin Your Seva</h2>
-    <p>Unlock unlimited wisdom. All 5 Sacred Modes. Daily Dharma. Priority guidance.</p>
-    <p style="color:var(--gold);font-weight:600;margin-bottom:4px;">🎉 Launch Offer: ₹999/year</p>
-    <p style="font-size:12px;color:var(--muted);margin-bottom:22px;">Normally ₹1,999 — Save ₹1,000</p>
-    <button class="btn-plan btn-plan-gold" id="razorpayYearlyBtn" style="margin-bottom:10px;">Pay ₹999/year · Razorpay</button>
-    <button class="btn-plan btn-plan-outline" id="razorpayMonthlyBtn">Monthly ₹199/month</button>
-    <p style="font-size:11px;color:var(--muted);margin-top:12px;margin-bottom:0;">UPI · Cards · Net Banking · Cancel anytime</p>
-  </div>
-</div>
-
-<!-- LEGAL MODAL (slide-up sheet) -->
-<div class="legal-modal-overlay" id="legalModal" onclick="if(event.target===this)closeLegal()">
-  <div class="legal-modal" id="legalContent">
-    <button class="legal-close" onclick="closeLegal()">✕ Close</button>
-    <div id="legalBody"></div>
+<div class="overlay" id="pay-modal">
+  <div class="modal">
+    <button class="modal-x" onclick="hidePayModal()">✕</button>
+    <div class="modal-om">🪔</div>
+    <h3>Continue Your Journey</h3>
+    <p class="modal-desc">Upgrade to receive unlimited wisdom from our sacred guide.</p>
+    <div class="modal-plans">
+      <div class="mplan sel" id="mplan-seva" onclick="selectPlan('seva')">
+        <div class="mplan-badge">Popular</div>
+        <div class="mplan-name">Seva</div>
+        <div class="mplan-price">₹99<span>/mo</span></div>
+        <div class="mplan-note">Unlimited + Voice</div>
+      </div>
+      <div class="mplan" id="mplan-guru" onclick="selectPlan('guru')">
+        <div class="mplan-name">Guru</div>
+        <div class="mplan-price">₹199<span>/mo</span></div>
+        <div class="mplan-note">Everything + Priority</div>
+      </div>
+    </div>
+    <button class="btn-pay" id="pay-btn" onclick="initiatePayment()">Pay ₹99 with Razorpay</button>
+    <div class="modal-note">Secure · UPI / Cards / Net Banking · Cancel anytime</div>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════
-// HINDUAI — ALL FUNCTIONS GLOBAL (no load wrapper)
-// ═══════════════════════════════════════════
+// ══════════════════════════════════════════
+// CONFIG — Replace these values
+// ══════════════════════════════════════════
+const RAZORPAY_KEY = 'rzp_live_SVBjCn9RD2Eroo';
+const ADMIN_EMAIL = 'tintiinn18@gmail.com'; // your Gmail — shows customer records to you only
 
-// ── STATE ──
-var isLoggedIn = false;
-var questionsLeft = 5;
-var currentMode = 'general';
-var conversationHistory = [];
-var clerkInstance = null;
+// ══════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════
+const VERSES = [
+  {t:"You have the right to perform your duties, but never to the fruits of your actions.",s:"Bhagavad Gita 2.47"},
+  {t:"The soul is never born nor dies at any time. It is unborn, eternal, ever-existing and primeval.",s:"Bhagavad Gita 2.20"},
+  {t:"A person can rise through the efforts of their own mind, or draw themselves down in the same manner.",s:"Bhagavad Gita 6.5"},
+  {t:"When meditation is mastered, the mind is unwavering like the flame of a lamp in a windless place.",s:"Bhagavad Gita 6.19"},
+  {t:"Sri Rama showed us that true strength is not in conquering others — it is in conquering oneself through patience and truth.",s:"Valmiki Ramayana"},
+  {t:"The Mahabharata teaches: one who has conquered anger has conquered the world.",s:"Mahabharata, Shanti Parva"},
+  {t:"Tat tvam asi — Thou art that. The individual soul and the universal soul are one.",s:"Chandogya Upanishad 6.8.7"},
+  {t:"सत्यमेव जयते — Truth alone triumphs, not falsehood.",s:"Mundaka Upanishad 3.1.6"},
+  {t:"Whatever you do, whatever you eat, whatever you offer — do it as an offering to the Divine.",s:"Bhagavad Gita 9.27"},
+  {t:"The one who sees inaction in action, and action in inaction, is truly wise.",s:"Bhagavad Gita 4.18"},
+  {t:"It is better to perform one's own duties imperfectly than to master the duties of another.",s:"Bhagavad Gita 3.35"},
+  {t:"Aham Brahmasmi — I am Brahman. The entire universe exists within you.",s:"Brihadaranyaka Upanishad 1.4.10"},
+];
 
-// ── MODE LABELS ──
-var modeLabels = {
-  general:   'General Guidance',
-  krishna:   'Ask Krishna Mode',
-  scripture: 'Scripture Search',
-  story:     'Story Mode',
-  meditation:'Meditation Guidance'
+const SUGGS = {
+  en:[
+    ["How to find inner peace?","What is Karma?","How to handle failure?","Story of Arjuna's courage"],
+    ["What does Gita say about anger?","Rama's lesson on patience","How to forgive others?","What is true success?"],
+    ["How to stay motivated?","Explain Dharma simply","How to overcome ego?","What is Moksha?"],
+    ["How to live with purpose?","Lesson from Mahabharata","How to deal with jealousy?","What is true devotion?"]
+  ],
+  hi:[
+    ["मन की शांति कैसे पाएं?","कर्म का अर्थ क्या है?","असफलता से कैसे उठें?","अर्जुन के साहस की कहानी"],
+    ["क्रोध पर गीता क्या कहती है?","राम जी का धैर्य का पाठ","दूसरों को माफ कैसे करें?","सच्ची सफलता क्या है?"],
+    ["जीवन में प्रेरित कैसे रहें?","धर्म को सरल भाषा में समझाएं","अहंकार से कैसे मुक्त हों?","मोक्ष क्या है?"],
+    ["उद्देश्यपूर्ण जीवन कैसे जिएं?","महाभारत से कोई पाठ","ईर्ष्या से कैसे निपटें?","सच्ची भक्ति क्या है?"]
+  ]
 };
 
-// ── SYSTEM PROMPTS ──
-var modeSystemPrompts = {
-  general: `You are HinduAI, a wise and warm spiritual guide rooted in Sanatan Dharma. Draw from the Bhagavad Gita, Ramayana, Mahabharata, Upanishads, Puranas, and Vedic philosophy.
+const SYSTEM = `You are a wise Sanatan Dharma guide for Hindu AI (hinduai.in). Your knowledge comes from the Bhagavad Gita, Ramayana, Mahabharata, Upanishads, and teachings of Lord Krishna, Rama, Shiva and other Hindu wisdom.
 
-Response style:
-- Start with the most relevant scripture reference: 📜 [Source — Chapter/Verse]
-- Share the Sanskrit shloka in italics if applicable
-- Give a clear, warm explanation in simple language
-- Connect it meaningfully to the seeker's situation
-- End with a "🪔 Dharmic Reflection:" — one sentence of inner wisdom
-- Reply in the same language the user writes in (Hindi or English)
-- Remember the full conversation and refer back to earlier questions naturally`,
+Guide people facing problems or questions about life, spirituality, purpose and Dharma.
 
-  krishna: `You are HinduAI channeling the wisdom of Bhagavan Krishna from the Bhagavad Gita. Respond as Krishna — calm, clear, profound, free from attachment.
+RULES:
+1. Do not only give quotes — explain with rich context and stories.
+2. Use stories from Ramayana or Mahabharata when relevant.
+3. Use Bhagavad Gita philosophy when relevant.
+4. Give simple, practical, compassionate advice rooted in Dharma.
+5. Speak calmly, wisely, warmly — like a loving guru.
+6. Keep responses meaningful — 3 to 4 paragraphs.
+7. When quoting scripture, write it on its own line starting exactly with "verse:" (lowercase).
 
-Style:
-- Address the seeker: "O dear seeker..." or "O child of Dharma..."
-- Open with a relevant Gita shloka: 🔱 Bhagavad Gita [Ch.X, V.Y]
-- Explain its deeper meaning in plain language
-- Apply it compassionately to their situation
-- Close with "Thus spoke Krishna:" followed by one timeless line
-- Never preach — only illuminate
-- Remember and build on previous exchanges`,
+Language rule: If user writes in Hindi, reply entirely in Hindi. If English, reply in English.`;
 
-  scripture: `You are HinduAI's scripture scholar. Answer with precision and depth about any verse, topic, or concept from Hindu scriptures.
+// ══════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════
+let lang='en', chatHistory=[], isLoading=false, recognition=null, isListening=false, selPlan='seva';
+let currentUser = null;
 
-Format:
-📖 Source: [Scripture · Chapter · Verse]
-Sanskrit: [Devanagari or transliteration]
-Translation: [clear English/Hindi]
-Meaning: [2-3 sentences of context]
-Real-life application: [how this applies today]
-Related: [1-2 other relevant references]
-Build on previous scripture discussions in this conversation.`,
+const FREE_LIMIT = 5;
+const PLAN_PRICES = {seva:99,guru:199};
+const PLAN_NAMES = {seva:'Seva Plan',guru:'Guru Plan'};
 
-  story: `You are HinduAI's storyteller of Sanatan Dharma's epics — Ramayana, Mahabharata, Puranas, Vedic lore.
-
-Format:
-🏹 **Story Title**
-Brief context (1-2 lines)
-The story — vivid, engaging, respectful (3-5 paragraphs)
-🌿 Moral: [core lesson]
-💡 Real-life meaning: [modern application]
-End by asking: "Would you like to explore another aspect of this story?"
-Avoid repeating stories already told in this session.`,
-
-  meditation: `You are HinduAI's Meditation Guide drawing from Vedic, Yogic, and Tantric traditions.
-
-Format:
-🧘 Practice Name
-Tradition: [Vedic / Yogic / Bhakti]
-Duration: [time]
-Preparation: [posture, setting]
-Breathing: [pranayama if applicable]
-Mantra: [Sanskrit mantra + meaning]
-Focus: [step-by-step guidance]
-Closing: [how to end]
-🌅 Reflection: [one contemplative question]
-Tailor the practice to what the seeker has shared.`
-};
-
-// ═══════════════════════════════════════════
-// MODAL FUNCTIONS — defined immediately, globally
-// ═══════════════════════════════════════════
-function openSignIn() {
-  document.getElementById('signInModal').classList.add('open');
-}
-
-function closeSignIn() {
-  document.getElementById('signInModal').classList.remove('open');
-}
-
-function openUpgrade() {
-  document.getElementById('upgradeModal').classList.add('open');
-}
-
-function closeUpgrade() {
-  document.getElementById('upgradeModal').classList.remove('open');
-}
-
-function closeModal(id) {
-  var el = document.getElementById(id);
-  if (el) el.classList.remove('open');
-}
-
-function openLegal(type) {
-  var legalContent = {
-    privacy: '<h2>🔒 Privacy Policy</h2><p><em>Last updated: January 2025</em></p><h3>Information We Collect</h3><p>When you use HinduAI, we may collect:</p><ul><li><strong>Login data:</strong> Name and email when you sign in with Google.</li><li><strong>Usage data:</strong> Questions asked, session duration, features used.</li><li><strong>Payment data:</strong> Processed via Razorpay. We never store card numbers.</li><li><strong>Device data:</strong> Browser type, IP address (for security).</li></ul><h3>Cookies & Analytics</h3><p>We use cookies for sessions and Google Analytics (anonymised) to understand usage. You may disable cookies in your browser.</p><h3>How We Use Your Data</h3><ul><li>To provide and improve AI guidance</li><li>To manage subscriptions and payments</li><li>To send important service updates</li><li>To comply with legal obligations</li></ul><h3>Data Sharing</h3><p>We do not sell your data. We share only with trusted providers (Google Auth, Razorpay, Google Analytics) under strict agreements.</p><h3>Your Rights</h3><p>Request access, correction or deletion at <a href="mailto:support@hinduai.in">support@hinduai.in</a>.</p>',
-
-    terms: '<h2>📜 Terms of Service</h2><p><em>Last updated: January 2025</em></p><h3>Acceptance</h3><p>By using HinduAI, you agree to these Terms.</p><h3>AI Limitations</h3><p>HinduAI provides AI-generated responses for educational and inspirational purposes only. Responses may contain inaccuracies. HinduAI is not a substitute for qualified spiritual guidance or a certified guru.</p><h3>User Responsibility</h3><ul><li>Use HinduAI only for lawful, respectful purposes</li><li>Do not attempt to manipulate AI responses</li><li>Maintain respectful language at all times</li></ul><h3>Prohibited Use</h3><ul><li>Promoting hatred or violence against any religion or group</li><li>Generating or spreading misinformation</li><li>Reverse-engineering or scraping the platform</li><li>Commercial use without written permission</li></ul><h3>Subscriptions</h3><p>Paid plans billed via Razorpay. Cancel anytime; access continues to end of billing period.</p><p><a href="mailto:support@hinduai.in">support@hinduai.in</a></p>',
-
-    refund: '<h2>💳 Refund Policy</h2><p><em>Last updated: January 2025</em></p><p>Refund requests must be submitted within <strong>7 days of purchase</strong> and are reviewed case by case.</p><h3>Eligibility</h3><ul><li>Request within 7 days of purchase</li><li>Refunds not provided if significant usage has occurred</li><li>Annual plan requests assessed individually</li></ul><h3>Technical Issues</h3><p>If a technical problem prevents you from using the service, contact us for resolution or refund.</p><h3>How to Request</h3><p>Email <a href="mailto:support@hinduai.in">support@hinduai.in</a> with your registered email, payment date, and reason. We respond within 3 business days.</p><h3>Razorpay Disputes</h3><p>If you raise a dispute through Razorpay without contacting us first, we reserve the right to contest it with evidence of service delivery.</p>'
+// ══════════════════════════════════════════
+// USER / AUTH
+// ══════════════════════════════════════════
+function handleGoogleLogin(response) {
+  const payload = parseJwt(response.credential);
+  currentUser = {
+    name: payload.name,
+    email: payload.email,
+    picture: payload.picture,
+    loginTime: new Date().toISOString()
   };
-  document.getElementById('legalBody').innerHTML = legalContent[type] || '';
-  document.getElementById('legalModal').classList.add('open');
+  localStorage.setItem('hinduai_user', JSON.stringify(currentUser));
+  saveCustomer(currentUser);
+  updateNavForUser();
+  hideLoginModal();
+  if (currentUser.email === ADMIN_EMAIL) showAdminSection();
 }
 
-function closeLegal() {
-  document.getElementById('legalModal').classList.remove('open');
+function parseJwt(token) {
+  const base64 = token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+  return JSON.parse(atob(base64));
 }
 
-// ═══════════════════════════════════════════
-// AUTH — CLERK + LOGIN STATE
-// ═══════════════════════════════════════════
-function onUserLoggedIn(user) {
-  isLoggedIn = true;
-  var name = (user && user.firstName) ? user.firstName : 'Seeker';
-
-  // Remove login wall
-  var wall = document.getElementById('loginWall');
-  if (wall) wall.style.display = 'none';
-
-  // Enable chat input
-  var input = document.getElementById('chatInput');
-  var sendBtn = document.getElementById('sendBtn');
-  if (input) { input.disabled = false; input.placeholder = 'Ask about Dharma, Gita, life... (Hindi or English)'; }
-  if (sendBtn) sendBtn.disabled = false;
-
-  // Show question counter
-  var ql = document.getElementById('questionsLeft');
-  if (ql) ql.style.display = 'block';
-
-  // Update nav
-  var navSignIn = document.getElementById('navSignInBtn');
-  var navUser = document.getElementById('navUserArea');
-  if (navSignIn) navSignIn.style.display = 'none';
-  if (navUser) {
-    navUser.style.display = 'flex';
-    navUser.innerHTML = '<span style="font-size:13px;color:var(--gold);">🪔 ' + name + '</span>' +
-      '<button onclick="triggerClerkSignOut()" style="background:transparent;border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:7px;font-size:12px;cursor:pointer;font-family:\'DM Sans\',sans-serif;">Sign Out</button>';
-  }
-
-  // Close sign-in modal
-  closeModal('signInModal');
-
-  // Welcome message
-  if (conversationHistory.length === 0) {
-    setTimeout(function() {
-      addAIMessage('🙏 Namaste, ' + name + '!\n\nI am ready to guide you with wisdom from the Bhagavad Gita, Ramayana, Mahabharata and all of Sanatan Dharma.\n\nChoose a mode above, or simply share what is on your heart today. 🪔');
-    }, 300);
+function loadUser() {
+  const stored = localStorage.getItem('hinduai_user');
+  if (stored) {
+    currentUser = JSON.parse(stored);
+    updateNavForUser();
+    if (currentUser.email === ADMIN_EMAIL) showAdminSection();
   }
 }
 
-function onUserLoggedOut() {
-  isLoggedIn = false;
-  conversationHistory = [];
-  var wall = document.getElementById('loginWall');
-  if (wall) wall.style.display = 'flex';
-  var input = document.getElementById('chatInput');
-  if (input) { input.disabled = true; input.placeholder = 'Sign in to ask...'; }
-  var navSignIn = document.getElementById('navSignInBtn');
-  var navUser = document.getElementById('navUserArea');
-  if (navSignIn) navSignIn.style.display = 'inline-flex';
-  if (navUser) navUser.style.display = 'none';
+function updateNavForUser() {
+  if (!currentUser) return;
+  const nr = document.getElementById('nav-right');
+  nr.innerHTML = `
+    <div class="nav-user" onclick="showPayModal()">
+      <img class="nav-avatar" src="${currentUser.picture}" alt="${currentUser.name}"/>
+      <span class="nav-username">${currentUser.name.split(' ')[0]}</span>
+    </div>
+    <button class="btn-sm btn-gold" onclick="showPayModal()">Upgrade ✦</button>
+    <button class="btn-sm btn-outline" onclick="logout()">Sign Out</button>
+  `;
 }
 
-function triggerClerkSignIn() {
-  if (clerkInstance) {
-    closeModal('signInModal');
-    clerkInstance.openSignIn({ redirectUrl: window.location.href });
-  } else {
-    // Fallback for local/preview testing
-    onUserLoggedIn({ firstName: 'Seeker' });
+function logout() {
+  localStorage.removeItem('hinduai_user');
+  currentUser = null;
+  location.reload();
+}
+
+// ══════════════════════════════════════════
+// CUSTOMER RECORDS (stored in localStorage)
+// In production: replace with a real DB like Firebase or Supabase
+// ══════════════════════════════════════════
+function saveCustomer(user) {
+  let customers = getCustomers();
+  const existing = customers.findIndex(c => c.email === user.email);
+  const record = {
+    name: user.name,
+    email: user.email,
+    plan: isPremium() ? localStorage.getItem('hinduai_plan') || 'seva' : 'free',
+    joinDate: existing >= 0 ? customers[existing].joinDate : new Date().toLocaleDateString('en-IN'),
+    lastSeen: new Date().toLocaleDateString('en-IN')
+  };
+  if (existing >= 0) customers[existing] = record;
+  else customers.push(record);
+  localStorage.setItem('hinduai_customers', JSON.stringify(customers));
+}
+
+function getCustomers() {
+  return JSON.parse(localStorage.getItem('hinduai_customers') || '[]');
+}
+
+function showAdminSection() {
+  const sec = document.getElementById('admin-section');
+  sec.style.display = 'block';
+  const customers = getCustomers();
+  const wrap = document.getElementById('customer-table-wrap');
+  if (customers.length === 0) {
+    wrap.innerHTML = '<p style="color:var(--text-dim);font-style:italic;text-align:center;padding:20px">No customers yet. Share your link to get your first users!</p>';
+    return;
   }
+  wrap.innerHTML = `
+    <p style="font-size:13px;color:var(--text-dim);margin-bottom:12px">Total users: <span style="color:var(--gold)">${customers.length}</span> &nbsp;·&nbsp; Premium: <span style="color:var(--gold)">${customers.filter(c=>c.plan!=='free').length}</span></p>
+    <table class="admin-table">
+      <thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Joined</th><th>Last Seen</th></tr></thead>
+      <tbody>${customers.map(c=>`
+        <tr>
+          <td>${c.name}</td>
+          <td>${c.email}</td>
+          <td><span class="${c.plan==='free'?'badge-free':'badge-premium'}">${c.plan}</span></td>
+          <td>${c.joinDate}</td>
+          <td>${c.lastSeen}</td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+  `;
 }
 
-function triggerClerkSignOut() {
-  if (clerkInstance) {
-    clerkInstance.signOut();
-  } else {
-    onUserLoggedOut();
+// ══════════════════════════════════════════
+// FREE LIMIT
+// ══════════════════════════════════════════
+function getTodayKey(){return 'hinduai_msgs_'+new Date().toDateString()}
+function getMsgsUsed(){return parseInt(localStorage.getItem(getTodayKey())||'0')}
+function incrementMsgs(){localStorage.setItem(getTodayKey(),getMsgsUsed()+1)}
+function isPremium(){return localStorage.getItem('hinduai_premium')==='true'}
+
+function updateLimitBar(){
+  const bar=document.getElementById('limit-bar');
+  if(isPremium()){
+    bar.innerHTML='<div style="font-size:12px;color:rgba(245,200,66,0.6)">✦ Premium — Unlimited guidance active</div>';
+    return;
   }
+  document.getElementById('msgs-left').textContent=Math.max(0,FREE_LIMIT-getMsgsUsed());
 }
 
-// ── Init Clerk when SDK ready ──
-document.addEventListener('DOMContentLoaded', function() {
-  // Wire click-outside-to-close for modals
-  document.addEventListener('click', function(e) {
-    ['signInModal','upgradeModal'].forEach(function(id) {
-      var el = document.getElementById(id);
-      if (el && e.target === el) closeModal(id);
-    });
+// ══════════════════════════════════════════
+// VERSE OF THE DAY
+// ══════════════════════════════════════════
+function loadVOTD(){
+  const v=VERSES[new Date().getDate()%VERSES.length];
+  document.getElementById('votd-text').textContent=v.t;
+  document.getElementById('votd-src').textContent='— '+v.s;
+}
+
+// ══════════════════════════════════════════
+// SUGGESTIONS
+// ══════════════════════════════════════════
+function renderSuggs(){
+  const c=document.getElementById('suggs'); c.innerHTML='';
+  const pool=SUGGS[lang];
+  const row=pool[Math.floor(Math.random()*pool.length)];
+  row.forEach(s=>{
+    const b=document.createElement('button');
+    b.className='sug'; b.textContent=s;
+    b.onclick=()=>{document.getElementById('inp').value=s;sendMsg()};
+    c.appendChild(b);
   });
+}
 
-  // Init Clerk asynchronously — does not block buttons
-  (function initClerk() {
-    if (window.Clerk) {
-      window.Clerk.load().then(function() {
-        clerkInstance = window.Clerk;
-        if (clerkInstance.user) {
-          onUserLoggedIn(clerkInstance.user);
-        }
-        clerkInstance.addListener(function(resources) {
-          if (resources.user) onUserLoggedIn(resources.user);
-          else onUserLoggedOut();
-        });
-      }).catch(function(e) { console.warn('Clerk load error:', e); });
+function setLang(l){
+  lang=l;
+  document.getElementById('btn-en').classList.toggle('act',l==='en');
+  document.getElementById('btn-hi').classList.toggle('act',l==='hi');
+  document.getElementById('inp').placeholder=l==='hi'?'अपना प्रश्न पूछें...':'Ask your question, share your thoughts...';
+  const w=document.getElementById('welcome');
+  if(w) w.querySelector('p').innerHTML=l==='hi'
+    ?'नमस्ते, प्रिय जिज्ञासु।<br>मैं यहाँ हूँ <span>भगवद गीता</span>, <span>रामायण</span>, <span>महाभारत</span> के ज्ञान से आपका मार्गदर्शन करने के लिए।<br><br>अपने मन की बात कहें।'
+    :'Namaste, dear seeker.<br>I am here to guide you with wisdom from the <span>Bhagavad Gita</span>, <span>Ramayana</span>, <span>Mahabharata</span> and our sacred Dharma.<br><br>Share what is in your heart.';
+  renderSuggs();
+}
+
+function scrollToChat(){document.getElementById('chat').scrollIntoView({behavior:'smooth'})}
+
+// ══════════════════════════════════════════
+// VOICE
+// ══════════════════════════════════════════
+function setupVoice(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR) return false;
+  recognition=new SR(); recognition.continuous=false; recognition.interimResults=false;
+  const setRec=on=>{
+    isListening=on;
+    ['mic-hdr','mic-inp'].forEach(id=>document.getElementById(id).classList.toggle('rec',on));
+    document.getElementById('vstatus').style.display=on?'block':'none';
+  };
+  recognition.onstart=()=>setRec(true);
+  recognition.onend=()=>setRec(false);
+  recognition.onerror=()=>setRec(false);
+  recognition.onresult=e=>{
+    document.getElementById('inp').value=e.results[0][0].transcript;
+    autoResize(document.getElementById('inp'));
+    setTimeout(()=>sendMsg(),400);
+  };
+  return true;
+}
+
+function toggleVoice(){
+  if(!recognition&&!setupVoice()){alert('Voice not supported in this browser. Please use Chrome.');return}
+  if(isListening){recognition.stop();return}
+  recognition.lang=lang==='hi'?'hi-IN':'en-IN';
+  recognition.start();
+}
+
+// ══════════════════════════════════════════
+// CHAT
+// ══════════════════════════════════════════
+function autoResize(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,100)+'px'}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg()}}
+
+function appendMsg(role,text){
+  const msgs=document.getElementById('messages');
+  const w=document.getElementById('welcome'); if(w) w.remove();
+  const div=document.createElement('div'); div.className='msg '+role;
+  const av=document.createElement('div'); av.className='av';
+  av.textContent=role==='user'?(lang==='hi'?'आप':'You'):'🪔';
+  const bub=document.createElement('div'); bub.className='bubble';
+  if(role==='ai') bub.innerHTML=fmtAI(text); else bub.textContent=text;
+  div.appendChild(av); div.appendChild(bub);
+  msgs.appendChild(div); msgs.scrollTop=msgs.scrollHeight;
+}
+
+function fmtAI(text){
+  return text.split('\n').map(line=>{
+    const t=line.trim(); if(!t) return '';
+    if(t.toLowerCase().startsWith('verse:')) return `<div class="vrs">${t.replace(/^verse:\s*/i,'')}</div>`;
+    return `<p>${t}</p>`;
+  }).join('');
+}
+
+function showThinking(){
+  const msgs=document.getElementById('messages');
+  const div=document.createElement('div'); div.className='msg ai'; div.id='thinker';
+  const av=document.createElement('div'); av.className='av'; av.textContent='🪔';
+  const th=document.createElement('div'); th.className='thinking';
+  th.innerHTML='<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+  div.appendChild(av); div.appendChild(th); msgs.appendChild(div); msgs.scrollTop=msgs.scrollHeight;
+}
+function removeThinking(){const el=document.getElementById('thinker');if(el)el.remove()}
+
+async function sendMsg(){
+  if(isLoading) return;
+  const inp=document.getElementById('inp');
+  const text=inp.value.trim(); if(!text) return;
+  if(!isPremium()&&getMsgsUsed()>=FREE_LIMIT){showPayModal();return}
+  inp.value=''; inp.style.height='auto';
+  document.getElementById('suggs').style.display='none';
+  appendMsg('user',text);
+  chatHistory.push({role:'user',content:text});
+  isLoading=true; document.getElementById('send-btn').disabled=true;
+  showThinking();
+  if(!isPremium()) incrementMsgs();
+  updateLimitBar();
+  try{
+    const res=await fetch('/api/chat',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({system:SYSTEM,messages:chatHistory})
+    });
+    const data=await res.json(); removeThinking();
+    if(data.content&&data.content[0]){
+      const reply=data.content[0].text;
+      chatHistory.push({role:'assistant',content:reply});
+      appendMsg('ai',reply);
+      renderSuggs();
+      document.getElementById('suggs').style.display='flex';
     } else {
-      // Clerk SDK not loaded yet, retry
-      setTimeout(initClerk, 500);
+      const errMsg = data.error || 'Unknown error';
+      appendMsg('ai', `Connection issue: ${errMsg}. Please try again. 🙏`);
     }
-  })();
-});
-
-// ═══════════════════════════════════════════
-// RAZORPAY
-// ═══════════════════════════════════════════
-function openRazorpay(plan) {
-  if (!isLoggedIn) { openSignIn(); return; }
-  closeModal('upgradeModal');
-
-  var email = '';
-  var name = '';
-  if (clerkInstance && clerkInstance.user) {
-    email = (clerkInstance.user.primaryEmailAddress && clerkInstance.user.primaryEmailAddress.emailAddress) || '';
-    name = clerkInstance.user.fullName || '';
+  } catch(e){
+    removeThinking();
+    appendMsg('ai',`Connection error: ${e.message}. Please try again. 🙏`);
   }
+  isLoading=false; document.getElementById('send-btn').disabled=false;
+}
 
-  var options = {
-    key: 'rzp_live_SVBjCn9RD2Eroo',
-    amount: plan === 'yearly' ? 99900 : 19900,
+// ══════════════════════════════════════════
+// MODALS
+// ══════════════════════════════════════════
+function showLoginModal(){document.getElementById('login-modal').classList.add('show')}
+function hideLoginModal(){document.getElementById('login-modal').classList.remove('show')}
+function showPayModal(){document.getElementById('pay-modal').classList.add('show')}
+function hidePayModal(){document.getElementById('pay-modal').classList.remove('show')}
+
+document.getElementById('login-modal').addEventListener('click',function(e){if(e.target===this)hideLoginModal()});
+document.getElementById('pay-modal').addEventListener('click',function(e){if(e.target===this)hidePayModal()});
+
+function selectPlan(plan){
+  selPlan=plan;
+  document.getElementById('mplan-seva').classList.toggle('sel',plan==='seva');
+  document.getElementById('mplan-guru').classList.toggle('sel',plan==='guru');
+  document.getElementById('pay-btn').textContent=`Pay ₹${PLAN_PRICES[plan]} with Razorpay`;
+}
+
+function openPayment(plan){selectPlan(plan);showPayModal()}
+
+// ══════════════════════════════════════════
+// RAZORPAY PAYMENT
+// ══════════════════════════════════════════
+function initiatePayment(){
+  const options = {
+    key: RAZORPAY_KEY,
+    amount: PLAN_PRICES[selPlan] * 100,
     currency: 'INR',
-    name: 'HinduAI',
-    description: plan === 'yearly' ? 'Annual Seva — ₹999/year' : 'Premium — ₹199/month',
-    image: 'https://hinduai.in/favicon.ico',
-    prefill: { email: email, name: name },
-    theme: { color: '#D4A017' },
-    handler: function(response) {
-      questionsLeft = 999999;
-      addAIMessage('🙏 Thank you for your Seva! Your Premium plan is now active.\n\nPayment ID: ' + response.razorpay_payment_id + '\n\nYou now have unlimited access to all Sacred Modes. Jai Shri Ram 🪔');
+    name: 'Hindu AI',
+    description: PLAN_NAMES[selPlan] + ' — Monthly',
+
+    prefill: {
+      name: currentUser?.name || '',
+      email: currentUser?.email || '',
     },
-    modal: { ondismiss: function() {} }
+
+    handler: function(response){
+
+      if(!response.razorpay_payment_id){
+        alert("Payment verification failed");
+        return;
+      }
+
+      localStorage.setItem('hinduai_premium','true');
+      localStorage.setItem('hinduai_plan',selPlan);
+      localStorage.setItem('hinduai_payment_id',response.razorpay_payment_id);
+
+      if(currentUser){
+        currentUser.plan = selPlan;
+        localStorage.setItem('hinduai_user', JSON.stringify(currentUser));
+        saveCustomer(currentUser);
+      }
+
+      hidePayModal();
+      updateLimitBar();
+
+      if(document.getElementById('admin-section').style.display === 'block'){
+        showAdminSection();
+      }
+
+      appendMsg('ai', lang === 'hi'
+        ? 'आपका भुगतान पूरा हो गया। 🙏 अब आप असीमित मार्गदर्शन प्राप्त कर सकते हैं। जय श्री राम!'
+        : '🙏 Payment successful! You now have unlimited access to Hindu AI. May Dharma guide your path always!'
+      );
+    },
+
+    theme: { color:'#f5c842' }
   };
 
-  if (typeof Razorpay !== 'undefined') {
-    var rzp = new Razorpay(options);
+  try{
+    const rzp = new Razorpay(options);
     rzp.open();
-  } else {
-    alert('Razorpay is loading. Please try again in a moment.');
+  } catch(e){
+    alert('Please add your Razorpay key in the RAZORPAY_KEY variable at the top of index.html.\n\nGet it from: https://dashboard.razorpay.com/app/keys');
   }
 }
-
-// ═══════════════════════════════════════════
-// CHAT
-// ═══════════════════════════════════════════
-function setMode(btn, mode) {
-  document.querySelectorAll('.mode-pill').forEach(function(p) { p.classList.remove('active'); });
-  btn.classList.add('active');
-  currentMode = mode;
-  document.getElementById('modeBadge').textContent = modeLabels[mode];
-}
-
-function escHtml(t) {
-  return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function formatText(text) {
-  return text
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/\n/g, '<br>');
-}
-
-function addUserMessage(text) {
-  var msgs = document.getElementById('chatMessages');
-  var div = document.createElement('div');
-  div.className = 'msg msg-user';
-  div.innerHTML = '<span class="msg-label" style="text-align:right;">You</span><div class="bubble">' + escHtml(text) + '</div>';
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function addTypingIndicator() {
-  var msgs = document.getElementById('chatMessages');
-  var div = document.createElement('div');
-  div.className = 'msg msg-ai';
-  div.id = 'typingIndicator';
-  div.innerHTML = '<span class="msg-label">HinduAI</span><div class="bubble"><div class="typing-indicator"><span></span><span></span><span></span></div></div>';
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function removeTypingIndicator() {
-  var el = document.getElementById('typingIndicator');
-  if (el) el.remove();
-}
-
-function addAIMessage(text) {
-  removeTypingIndicator();
-  var msgs = document.getElementById('chatMessages');
-  var div = document.createElement('div');
-  div.className = 'msg msg-ai';
-  div.innerHTML = '<span class="msg-label">HinduAI</span><div class="bubble"><span class="ai-body">' + formatText(text) + '</span></div>';
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-async function sendMessage() {
-  if (!isLoggedIn) { openSignIn(); return; }
-
-  var input = document.getElementById('chatInput');
-  var text = input.value.trim();
-  if (!text) return;
-
-  if (questionsLeft <= 0) { openUpgrade(); return; }
-
-  input.value = '';
-  input.style.height = 'auto';
-  document.getElementById('sendBtn').disabled = true;
-  input.disabled = true;
-
-  addUserMessage(text);
-  addTypingIndicator();
-
-  conversationHistory.push({ role: 'user', content: text });
-
-  try {
-    var response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
-        max_tokens: 1000,
-        system: modeSystemPrompts[currentMode],
-        messages: conversationHistory
-      })
-    });
-
-    var data = await response.json();
-    var aiText = (data.content && data.content[0] && data.content[0].text)
-      ? data.content[0].text
-      : '🙏 I am here, dear seeker. Please ask your question again.';
-
-    conversationHistory.push({ role: 'assistant', content: aiText });
-    addAIMessage(aiText);
-
-    if (questionsLeft < 999999) {
-      questionsLeft--;
-      document.getElementById('qCount').textContent = questionsLeft;
-      if (questionsLeft <= 0) {
-        input.placeholder = 'Upgrade for unlimited guidance ✦';
-      }
-    }
-
-  } catch(err) {
-    addAIMessage('🙏 I encountered a brief interruption. Please try again, dear seeker.');
-    console.error(err);
-  }
-
-  document.getElementById('sendBtn').disabled = false;
-  input.disabled = false;
-  input.focus();
-}
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+loadVOTD();
+renderSuggs();
+updateLimitBar();
+setupVoice();
+loadUser();
 </script>
+<script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_live_Y2xlcmsuaGluZHVhaS5pbiQ"
+  src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
+</script>
+<button onclick="Clerk.openSignIn()">Sign In</button>
 </body>
 </html>
