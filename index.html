@@ -6,7 +6,6 @@
   <title>HinduAI — Ancient Wisdom, Modern Guidance</title>
   <meta name="description" content="HinduAI offers guidance inspired by Bhagavad Gita, Ramayana and Mahabharata. Start with 5 free chats daily and upgrade to Seva for unlimited access." />
   <meta name="theme-color" content="#120600" />
-  <meta name="robots" content="index,follow" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,336 +18,123 @@
 
   <style>
     :root{
-      --bg:#120600;
-      --bg-2:#1a0900;
-      --panel:rgba(255,255,255,.045);
-      --panel-2:rgba(255,255,255,.065);
-      --line:rgba(245,200,66,.16);
-      --gold:#f5c842;
-      --gold-2:#ffe08a;
-      --text:#fff4d8;
-      --muted:rgba(255,240,205,.74);
-      --soft:rgba(255,240,205,.52);
-      --shadow:0 18px 50px rgba(0,0,0,.35);
-      --radius:24px;
-      --max:1180px;
+      --bg:#120600; --bg2:#1a0900; --panel:rgba(255,255,255,.045); --line:rgba(245,200,66,.16);
+      --gold:#f5c842; --gold2:#ffe08a; --text:#fff4d8; --muted:rgba(255,240,205,.74); --soft:rgba(255,240,205,.52);
+      --shadow:0 18px 50px rgba(0,0,0,.35); --radius:24px; --max:1180px;
     }
-
     *{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
     body{
-      font-family:Inter,system-ui,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(circle at top, rgba(245,200,66,.09), transparent 28%),
-        linear-gradient(180deg, #180700 0%, #120600 45%, #150700 100%);
+      font-family:Inter,system-ui,sans-serif;color:var(--text);
+      background:radial-gradient(circle at top, rgba(245,200,66,.08), transparent 25%), linear-gradient(180deg,#180700 0%,#120600 50%,#150700 100%);
       overflow-x:hidden;
     }
-
-    a{text-decoration:none;color:inherit}
-    button{font:inherit}
-    .container{width:min(var(--max), calc(100% - 28px));margin:0 auto}
-    .section{padding:88px 0}
-    .glow{
-      position:fixed; inset:auto; z-index:0; pointer-events:none; filter:blur(80px); opacity:.22;
-      border-radius:50%;
-    }
-    .g1{left:-60px; top:90px; width:260px; height:260px; background:#b35c12}
-    .g2{right:-70px; top:260px; width:280px; height:280px; background:#6f2b09}
-    .g3{left:28%; bottom:140px; width:240px; height:240px; background:#7a4c10}
-
-    .nav{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter:blur(14px);
-      background:rgba(18,6,0,.8);
-      border-bottom:1px solid var(--line);
-    }
-    .nav-wrap{
-      min-height:78px;
-      display:flex; align-items:center; justify-content:space-between; gap:18px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-family:Cinzel,serif; color:var(--gold); font-weight:700; letter-spacing:1.6px;
-      font-size:20px;
-    }
-    .brand-icon{font-size:24px; text-shadow:0 0 18px rgba(245,200,66,.42)}
-    .nav-links{display:flex; align-items:center; gap:18px; color:var(--soft); font-size:14px}
+    a{text-decoration:none;color:inherit} button{font:inherit}
+    .container{width:min(var(--max),calc(100% - 28px));margin:0 auto}
+    .section{padding:84px 0}
+    .nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(18,6,0,.82);border-bottom:1px solid var(--line)}
+    .nav-wrap{min-height:78px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+    .brand{display:flex;align-items:center;gap:10px;font-family:Cinzel,serif;color:var(--gold);font-weight:700;letter-spacing:1.6px;font-size:20px}
+    .brand-icon{font-size:24px}
+    .nav-links{display:flex;align-items:center;gap:18px;color:var(--soft);font-size:14px}
     .nav-links a:hover{color:var(--gold)}
-    .nav-actions{display:flex; gap:10px; align-items:center}
-
-    .btn{
-      border:1px solid transparent; border-radius:999px; cursor:pointer; transition:.24s ease;
-      display:inline-flex; align-items:center; justify-content:center; gap:8px; white-space:nowrap;
+    .nav-actions{display:flex;gap:10px;align-items:center}
+    .btn{border:1px solid transparent;border-radius:999px;cursor:pointer;transition:.24s ease;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap}
+    .btn-sm{padding:11px 17px;font-size:14px}
+    .btn-lg{padding:15px 26px;font-size:15px}
+    .btn-primary{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#1b0a00;font-weight:800;box-shadow:0 10px 28px rgba(245,200,66,.2)}
+    .btn-primary:hover{transform:translateY(-2px)}
+    .btn-outline{background:rgba(255,255,255,.02);color:var(--gold);border-color:rgba(245,200,66,.28)}
+    .btn-outline:hover{background:rgba(245,200,66,.1)}
+    .btn-ghost{background:rgba(255,255,255,.04);color:var(--text);border-color:rgba(255,255,255,.08)}
+    .hero{padding:72px 0 36px}
+    .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:28px;align-items:center}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;border:1px solid rgba(245,200,66,.24);background:rgba(245,200,66,.08);color:var(--gold2);font-size:13px;margin-bottom:18px}
+    h1{font-family:Cinzel,serif;color:var(--gold);font-size:clamp(40px,6vw,78px);line-height:1.05;margin-bottom:18px}
+    .lead{color:var(--muted);font-size:18px;line-height:1.8;max-width:720px;margin-bottom:26px}
+    .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px}
+    .hero-proof{display:flex;flex-wrap:wrap;gap:18px;color:var(--soft);font-size:14px}
+    .hero-card,.card,.price-card,.demo-box,.mini-section{
+      border-radius:28px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.035));padding:28px;box-shadow:var(--shadow)
     }
-    .btn-sm{padding:11px 17px; font-size:14px}
-    .btn-lg{padding:15px 26px; font-size:15px}
-    .btn-primary{
-      background:linear-gradient(180deg, var(--gold-2), var(--gold));
-      color:#1b0a00; font-weight:800; box-shadow:0 10px 28px rgba(245,200,66,.2);
-    }
-    .btn-primary:hover{transform:translateY(-2px); box-shadow:0 16px 34px rgba(245,200,66,.28)}
-    .btn-outline{
-      background:rgba(255,255,255,.02); color:var(--gold); border-color:rgba(245,200,66,.28);
-    }
-    .btn-outline:hover{background:rgba(245,200,66,.1); transform:translateY(-2px)}
-    .btn-ghost{
-      background:rgba(255,255,255,.04); color:var(--text); border-color:rgba(255,255,255,.08);
-    }
-    .btn-ghost:hover{background:rgba(255,255,255,.08)}
-
-    .hero{position:relative; z-index:1; padding:72px 0 40px}
-    .hero-grid{
-      display:grid; grid-template-columns:1.08fr .92fr; gap:28px; align-items:center;
-    }
-    .eyebrow{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:10px 14px; border-radius:999px;
-      border:1px solid rgba(245,200,66,.24);
-      background:rgba(245,200,66,.08); color:var(--gold-2); font-size:13px;
-      margin-bottom:18px;
-    }
-    h1{
-      font-family:Cinzel,serif; color:var(--gold); font-size:clamp(40px, 6vw, 78px);
-      line-height:1.05; letter-spacing:.5px; margin-bottom:18px;
-    }
-    .lead{
-      color:var(--muted); font-size:18px; line-height:1.8; max-width:720px; margin-bottom:26px;
-    }
-    .hero-cta{display:flex; flex-wrap:wrap; gap:12px; margin-bottom:20px}
-    .hero-proof{display:flex; flex-wrap:wrap; gap:18px; color:var(--soft); font-size:14px}
-    .hero-proof span{display:flex; align-items:center; gap:8px}
-
-    .hero-card{
-      position:relative; overflow:hidden;
-      border-radius:32px; border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.035));
-      padding:28px; box-shadow:var(--shadow);
-    }
-    .hero-card::before{
-      content:""; position:absolute; inset:0;
-      background:radial-gradient(circle at top, rgba(245,200,66,.18), transparent 42%);
-      pointer-events:none;
-    }
-    .sacred{
-      width:84px; height:84px; border-radius:50%; display:grid; place-items:center;
-      border:1px solid rgba(245,200,66,.26); background:rgba(245,200,66,.08);
-      font-size:44px; color:var(--gold); margin-bottom:16px;
-    }
-    .card-title{
-      font-family:Cinzel,serif; color:var(--gold); font-size:22px; margin-bottom:8px;
-    }
-    .card-sub{color:var(--soft); font-size:13px; margin-bottom:18px}
-    .mini-chat{display:flex; flex-direction:column; gap:12px}
-    .bubble{
-      padding:14px 16px; border-radius:18px; line-height:1.7; font-size:14px;
-    }
-    .bubble.user{
-      align-self:flex-end; background:rgba(245,200,66,.1); border:1px solid rgba(245,200,66,.18); max-width:82%;
-    }
-    .bubble.ai{
-      background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.06); color:var(--muted);
-    }
-    .bubble.ai strong{color:var(--gold-2)}
-
-    .stats{
-      display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:24px;
-    }
-    .stat{
-      border-radius:22px; border:1px solid var(--line);
-      background:rgba(255,255,255,.035); padding:18px; text-align:center;
-    }
-    .stat h3{
-      font-family:Cinzel,serif; color:var(--gold); font-size:30px; margin-bottom:6px;
-    }
-    .stat p{color:var(--soft); font-size:13px; line-height:1.5}
-
-    .strip{
-      border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:rgba(245,200,66,.04);
-      position:relative; z-index:1;
-    }
-    .strip-wrap{padding:22px 0; text-align:center}
-    .strip-label{
-      font-family:Cinzel,serif; color:var(--gold-2); letter-spacing:2px; font-size:12px; text-transform:uppercase; margin-bottom:10px;
-    }
-    blockquote{max-width:900px; margin:0 auto; font-style:italic; color:var(--muted); line-height:1.9; font-size:17px}
-    cite{display:block; margin-top:8px; color:var(--soft); font-size:13px}
-
-    .section-head{
-      text-align:center; max-width:780px; margin:0 auto 34px; position:relative; z-index:1;
-    }
-    .section-head h2{
-      font-family:Cinzel,serif; color:var(--gold); font-size:clamp(28px,4vw,44px); margin-bottom:12px;
-    }
-    .section-head p{color:var(--muted); line-height:1.8; font-size:16px}
-
-    .grid-3,.grid-2{
-      display:grid; gap:18px; position:relative; z-index:1;
-    }
+    .hero-card{position:relative;overflow:hidden}
+    .hero-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at top,rgba(245,200,66,.15),transparent 42%);pointer-events:none}
+    .sacred{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;border:1px solid rgba(245,200,66,.26);background:rgba(245,200,66,.08);font-size:44px;color:var(--gold);margin-bottom:16px}
+    .card-title{font-family:Cinzel,serif;color:var(--gold);font-size:22px;margin-bottom:8px}
+    .card-sub{color:var(--soft);font-size:13px;margin-bottom:18px}
+    .mini-chat{display:flex;flex-direction:column;gap:12px}
+    .bubble{padding:14px 16px;border-radius:18px;line-height:1.7;font-size:14px}
+    .bubble.user{align-self:flex-end;background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.18);max-width:82%}
+    .bubble.ai{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);color:var(--muted)}
+    .bubble.ai strong{color:var(--gold2)}
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+    .stat{border-radius:22px;border:1px solid var(--line);background:rgba(255,255,255,.035);padding:18px;text-align:center}
+    .stat h3{font-family:Cinzel,serif;color:var(--gold);font-size:30px;margin-bottom:6px}
+    .stat p{color:var(--soft);font-size:13px;line-height:1.5}
+    .section-head{text-align:center;max-width:780px;margin:0 auto 34px}
+    .section-head h2{font-family:Cinzel,serif;color:var(--gold);font-size:clamp(28px,4vw,44px);margin-bottom:12px}
+    .section-head p{color:var(--muted);line-height:1.8;font-size:16px}
+    .grid-3,.pricing{display:grid;gap:18px}
     .grid-3{grid-template-columns:repeat(3,1fr)}
-    .grid-2{grid-template-columns:repeat(2,1fr)}
-    .card{
-      display:block;
-      border-radius:24px; border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.035));
-      padding:24px; box-shadow:var(--shadow); transition:.24s ease;
-    }
-    .card:hover{transform:translateY(-4px); background:rgba(255,255,255,.07); border-color:rgba(245,200,66,.24)}
-    .icon{
-      width:56px; height:56px; border-radius:16px; display:grid; place-items:center;
-      background:rgba(245,200,66,.08); border:1px solid rgba(245,200,66,.18);
-      margin-bottom:16px; font-size:26px;
-    }
-    .card h3{
-      font-family:Cinzel,serif; color:var(--gold); font-size:21px; margin-bottom:10px;
-    }
-    .card p{color:var(--muted); font-size:14px; line-height:1.8}
-    .coming{margin-top:12px; display:inline-block; color:var(--gold-2); font-size:12px; border:1px solid rgba(245,200,66,.22); padding:7px 10px; border-radius:999px; background:rgba(245,200,66,.06)}
-
-    .pricing{
-      display:grid; grid-template-columns:repeat(2,1fr); gap:22px; max-width:920px; margin:0 auto;
-    }
-    .price-card{
-      border-radius:28px; border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
-      padding:28px; box-shadow:var(--shadow);
-    }
-    .price-card.main{border-color:rgba(245,200,66,.34); transform:scale(1.02)}
-    .badge{
-      display:inline-block; background:var(--gold); color:#1a0800; font-weight:800;
-      font-size:12px; border-radius:999px; padding:7px 12px; margin-bottom:12px;
-    }
-    .price-name{
-      font-family:Cinzel,serif; color:var(--gold); font-size:24px; margin-bottom:8px;
-    }
-    .price-desc{color:var(--soft); min-height:48px; line-height:1.7; margin-bottom:16px}
-    .price{display:flex; align-items:flex-end; gap:6px; margin-bottom:8px}
-    .price strong{
-      font-family:Cinzel,serif; font-size:54px; line-height:1; color:#fff;
-    }
-    .price span{color:var(--soft); padding-bottom:8px}
-    .price-note{color:#9de58c; font-size:13px; margin-bottom:18px}
-    .list{list-style:none; display:grid; gap:11px; margin-bottom:22px}
-    .list li{
-      position:relative; padding-left:24px; color:var(--muted); font-size:14px; line-height:1.65;
-    }
-    .list li::before{content:"✦"; position:absolute; left:0; color:var(--gold)}
-
-    .demo-box{
-      max-width:920px; margin:0 auto; border-radius:28px; border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
-      padding:26px; box-shadow:var(--shadow);
-    }
-    .demo-top{
-      display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
-      padding-bottom:18px; border-bottom:1px solid var(--line); margin-bottom:18px;
-    }
-    .demo-top h3{font-family:Cinzel,serif; color:var(--gold); font-size:24px}
-    .demo-top p{color:var(--soft); font-size:14px}
-    .free-bar{
-      display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
-      margin-bottom:18px; padding:13px 16px; border-radius:18px;
-      background:rgba(245,200,66,.07); border:1px solid rgba(245,200,66,.16);
-      color:var(--muted);
-    }
-    .messages{
-      min-height:250px; display:flex; flex-direction:column; gap:12px; margin-bottom:16px;
-    }
-    .composer{display:flex; gap:10px; flex-wrap:wrap}
-    textarea{
-      width:100%; min-height:110px; resize:vertical; outline:none;
-      border-radius:18px; border:1px solid var(--line);
-      background:rgba(255,255,255,.05); color:var(--text);
-      padding:14px 16px; font:inherit;
-    }
+    .pricing{grid-template-columns:repeat(2,1fr);max-width:920px;margin:0 auto}
+    .card{display:block;padding:24px}
+    .card h3{font-family:Cinzel,serif;color:var(--gold);font-size:21px;margin-bottom:10px}
+    .card p{color:var(--muted);font-size:14px;line-height:1.8}
+    .icon{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.18);margin-bottom:16px;font-size:26px}
+    .coming{margin-top:12px;display:inline-block;color:var(--gold2);font-size:12px;border:1px solid rgba(245,200,66,.22);padding:7px 10px;border-radius:999px;background:rgba(245,200,66,.06)}
+    .badge{display:inline-block;background:var(--gold);color:#1a0800;font-weight:800;font-size:12px;border-radius:999px;padding:7px 12px;margin-bottom:12px}
+    .price-name{font-family:Cinzel,serif;color:var(--gold);font-size:24px;margin-bottom:8px}
+    .price-desc{color:var(--soft);min-height:48px;line-height:1.7;margin-bottom:16px}
+    .price{display:flex;align-items:flex-end;gap:6px;margin-bottom:8px}
+    .price strong{font-family:Cinzel,serif;font-size:54px;line-height:1;color:#fff}
+    .price span{color:var(--soft);padding-bottom:8px}
+    .price-note{color:#9de58c;font-size:13px;margin-bottom:18px}
+    .list{list-style:none;display:grid;gap:11px;margin-bottom:22px}
+    .list li{position:relative;padding-left:24px;color:var(--muted);font-size:14px;line-height:1.65}
+    .list li::before{content:"✦";position:absolute;left:0;color:var(--gold)}
+    .demo-box{max-width:920px;margin:0 auto;padding:26px}
+    .demo-top{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:18px}
+    .demo-top h3{font-family:Cinzel,serif;color:var(--gold);font-size:24px}
+    .demo-top p{color:var(--soft);font-size:14px}
+    .free-bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;padding:13px 16px;border-radius:18px;background:rgba(245,200,66,.07);border:1px solid rgba(245,200,66,.16);color:var(--muted)}
+    .messages{min-height:250px;display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+    .composer{display:flex;gap:10px;flex-wrap:wrap}
+    textarea{width:100%;min-height:110px;resize:vertical;outline:none;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--text);padding:14px 16px;font:inherit}
     textarea::placeholder{color:rgba(255,240,205,.35)}
-
-    footer{
-      border-top:1px solid var(--line); padding:34px 0 44px; position:relative; z-index:1;
-    }
-    .footer-grid{
-      display:grid; grid-template-columns:1.1fr .7fr .9fr; gap:20px;
-    }
-    .footer-brand{
-      font-family:Cinzel,serif; color:var(--gold); font-size:22px; margin-bottom:12px;
-    }
-    .footer-text,.footer-links{
-      color:var(--soft); line-height:1.8; font-size:14px;
-    }
-    .footer-links{display:grid; gap:8px}
-    .footer-links a:hover{color:var(--gold)}
-    .copy{margin-top:16px; color:rgba(255,240,205,.38); font-size:12px}
-
-    .top-cta{
-      position:fixed; right:18px; bottom:18px; z-index:80;
-      box-shadow:0 18px 30px rgba(0,0,0,.28);
-    }
-
-    .overlay{
-      position:fixed; inset:0; z-index:120; display:none; align-items:center; justify-content:center; padding:20px;
-      background:rgba(0,0,0,.74);
-    }
+    .status{margin-top:10px;font-size:13px;color:var(--soft)}
+    footer{border-top:1px solid var(--line);padding:34px 0 44px}
+    .footer-grid{display:grid;grid-template-columns:1.1fr .7fr .9fr;gap:20px}
+    .footer-brand{font-family:Cinzel,serif;color:var(--gold);font-size:22px;margin-bottom:12px}
+    .footer-text,.footer-links{color:var(--soft);line-height:1.8;font-size:14px}
+    .footer-links{display:grid;gap:8px}
+    .copy{margin-top:16px;color:rgba(255,240,205,.38);font-size:12px}
+    .top-cta{position:fixed;right:18px;bottom:18px;z-index:80;box-shadow:0 18px 30px rgba(0,0,0,.28)}
+    .overlay{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.74)}
     .overlay.show{display:flex}
-    .modal{
-      width:min(460px,100%);
-      border-radius:28px; border:1px solid rgba(245,200,66,.26);
-      background:linear-gradient(180deg, #251000, #150700);
-      padding:28px; position:relative; box-shadow:var(--shadow);
-    }
-    .close{
-      position:absolute; right:14px; top:14px; width:38px; height:38px; border-radius:50%;
-      border:1px solid rgba(255,255,255,.08); background:rgba(255,255,255,.04); color:#fff; cursor:pointer;
-    }
-    .modal .om{font-size:42px; margin-bottom:10px}
-    .modal h3{
-      font-family:Cinzel,serif; color:var(--gold); font-size:28px; margin-bottom:8px;
-    }
-    .modal p{color:var(--muted); line-height:1.8; margin-bottom:18px}
-    .plans{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px}
-    .plan{
-      padding:16px; border-radius:18px; border:1px solid var(--line);
-      background:rgba(255,255,255,.03); cursor:pointer; transition:.2s ease;
-    }
-    .plan.active{border-color:rgba(245,200,66,.36); background:rgba(245,200,66,.08)}
-    .plan h4{font-family:Cinzel,serif; color:var(--gold); font-size:18px; margin-bottom:6px}
-    .plan p{margin:0; color:var(--soft); font-size:13px}
-
-    @media (max-width: 1040px){
-      .hero-grid,.grid-3,.grid-2,.pricing,.footer-grid{grid-template-columns:1fr}
-      .stats{grid-template-columns:repeat(2,1fr)}
-      .price-card.main{transform:none}
-      .nav-wrap{flex-wrap:wrap; padding:12px 0}
-    }
-
-    @media (max-width: 660px){
-      .nav-links{display:none}
-      .nav-actions{width:100%}
-      .nav-actions .btn{flex:1}
-      .hero-cta .btn,.composer .btn{width:100%}
-      .stats{grid-template-columns:1fr 1fr}
-      .plans{grid-template-columns:1fr}
-    }
+    .modal{width:min(460px,100%);border-radius:28px;border:1px solid rgba(245,200,66,.26);background:linear-gradient(180deg,#251000,#150700);padding:28px;position:relative;box-shadow:var(--shadow)}
+    .close{position:absolute;right:14px;top:14px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:#fff;cursor:pointer}
+    .modal .om{font-size:42px;margin-bottom:10px}
+    .modal h3{font-family:Cinzel,serif;color:var(--gold);font-size:28px;margin-bottom:8px}
+    .modal p{color:var(--muted);line-height:1.8;margin-bottom:18px}
+    .plans{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+    .plan{padding:16px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.03);cursor:pointer;transition:.2s ease}
+    .plan.active{border-color:rgba(245,200,66,.36);background:rgba(245,200,66,.08)}
+    .plan h4{font-family:Cinzel,serif;color:var(--gold);font-size:18px;margin-bottom:6px}
+    .plan p{margin:0;color:var(--soft);font-size:13px}
+    @media (max-width:1040px){.hero-grid,.grid-3,.pricing,.footer-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.nav-wrap{flex-wrap:wrap;padding:12px 0}}
+    @media (max-width:660px){.nav-links{display:none}.nav-actions{width:100%}.nav-actions .btn{flex:1}.hero-cta .btn,.composer .btn{width:100%}.stats{grid-template-columns:1fr 1fr}.plans{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
-  <div class="glow g1"></div>
-  <div class="glow g2"></div>
-  <div class="glow g3"></div>
-
   <nav class="nav">
     <div class="container nav-wrap">
-      <a href="#top" class="brand">
-        <span class="brand-icon">ॐ</span>
-        <span>HINDUAI</span>
-      </a>
-
+      <a href="#top" class="brand"><span class="brand-icon">ॐ</span><span>HINDUAI</span></a>
       <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#topics">Topics</a>
         <a href="#pricing">Pricing</a>
         <a href="#demo">Try It</a>
       </div>
-
       <div class="nav-actions">
         <button class="btn btn-outline btn-sm" onclick="openSignIn()">Sign In</button>
         <a class="btn btn-primary btn-sm" href="#demo">Start Free</a>
@@ -362,16 +148,11 @@
         <div>
           <div class="eyebrow">🪔 5 free chats daily · Hindi & English · Seva ₹99/month</div>
           <h1>Ancient Wisdom. Modern Guidance.</h1>
-          <p class="lead">
-            HinduAI is a spiritual guidance product inspired by the Bhagavad Gita, Ramayana and Mahabharata.
-            Let people begin with 5 free chats daily, then upgrade to Seva for unlimited access.
-          </p>
-
+          <p class="lead">HinduAI is a spiritual guidance product inspired by the Bhagavad Gita, Ramayana and Mahabharata. Let people begin with 5 free chats daily, then upgrade to Seva for unlimited access.</p>
           <div class="hero-cta">
             <a href="#demo" class="btn btn-primary btn-lg">Start Free Chats</a>
             <a href="#pricing" class="btn btn-outline btn-lg">View Pricing</a>
           </div>
-
           <div class="hero-proof">
             <span>🔓 <strong data-free-left>5</strong> free chats left today</span>
             <span>⚡ Google sign-in ready</span>
@@ -383,175 +164,28 @@
         <div class="hero-card">
           <div class="sacred">ॐ</div>
           <div class="card-title">A calm companion for life’s difficult moments</div>
-          <div class="card-sub">Launch-focused design with actual structure, not a raw placeholder</div>
-
+          <div class="card-sub">Better layout, better positioning, and the chat stays near the top.</div>
           <div class="mini-chat">
             <div class="bubble user">How do I stay calm when my mind is restless?</div>
             <div class="bubble ai"><strong>Guidance:</strong> The Gita shifts attention from panic to duty. Start with one sincere action today instead of trying to control every outcome at once.</div>
-            <div class="bubble.ai bubble ai"><strong>Reflection:</strong> Restlessness often reduces when purpose becomes clearer than fear.</div>
+            <div class="bubble ai"><strong>Reflection:</strong> Restlessness often reduces when purpose becomes clearer than fear.</div>
           </div>
         </div>
       </div>
 
       <div class="container stats">
-        <div class="stat">
-          <h3>5</h3>
-          <p>Free chats daily to let people try the product first</p>
-        </div>
-        <div class="stat">
-          <h3>₹99</h3>
-          <p>Main Seva plan for your paid conversion</p>
-        </div>
-        <div class="stat">
-          <h3>24/7</h3>
-          <p>Available whenever users need reflection</p>
-        </div>
-        <div class="stat">
-          <h3>2</h3>
-          <p>Launch languages: English and Hindi</p>
-        </div>
+        <div class="stat"><h3>5</h3><p>Free chats daily</p></div>
+        <div class="stat"><h3>₹99</h3><p>Main Seva plan</p></div>
+        <div class="stat"><h3>24/7</h3><p>Always available</p></div>
+        <div class="stat"><h3>2</h3><p>English and Hindi</p></div>
       </div>
     </section>
 
-    <section class="strip">
-      <div class="container strip-wrap">
-        <div class="strip-label">Verse of the day</div>
-        <blockquote>“You have a right to perform your prescribed duties, but you are not entitled to the fruits of your actions.”</blockquote>
-        <cite>Bhagavad Gita 2.47</cite>
-      </div>
-    </section>
-
-    <section class="section" id="features">
+    <section class="section" id="demo" style="padding-top:28px">
       <div class="container">
         <div class="section-head">
-          <h2>Built to feel premium, not broken</h2>
-          <p>
-            This version gives you a proper visual hierarchy, real cards, a pricing section, a working free-chat demo, and a better launch feel for your existing static repo.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <a class="card" href="#scripture">
-            <div class="icon">📖</div>
-            <h3>Scripture-Inspired Guidance</h3>
-            <p>Use the Bhagavad Gita, Ramayana and Mahabharata as inspiration, then explain the advice in simple words people can apply today.</p>
-          </a>
-
-          <a class="card" href="#topics">
-            <div class="icon">🧠</div>
-            <h3>Life Questions That Matter</h3>
-            <p>Purpose, anger, fear, discipline, heartbreak and peace are stronger launch topics than generic inspiration quotes.</p>
-          </a>
-
-          <div class="card">
-            <div class="icon">🎤</div>
-            <h3>Premium Voice</h3>
-            <p>Keep this visible because it sounds premium, but mark it honestly as an upcoming feature until the basics are solid.</p>
-            <span class="coming">Coming soon</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="scripture">
-      <div class="container">
-        <div class="section-head">
-          <h2>Scripture guidance, explained clearly</h2>
-          <p>
-            When someone clicks this section, they should learn what the product actually means — not hit a dead end.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <div class="card">
-            <div class="icon">📜</div>
-            <h3>Bhagavad Gita</h3>
-            <p>Duty, self-control, non-attachment, clarity in confusion and right action without obsession over results.</p>
-          </div>
-          <div class="card">
-            <div class="icon">🏹</div>
-            <h3>Ramayana</h3>
-            <p>Patience, character, devotion, righteous conduct and moral steadiness even during hardship.</p>
-          </div>
-          <div class="card">
-            <div class="icon">⚔️</div>
-            <h3>Mahabharata</h3>
-            <p>Complex choices, family conflict, justice, power, weakness and the difficulty of choosing dharma under pressure.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="topics">
-      <div class="container">
-        <div class="section-head">
-          <h2>Real life topics users actually search for</h2>
-          <p>
-            These are strong product angles and future SEO topics. They also make the homepage feel more complete right now.
-          </p>
-        </div>
-
-        <div class="grid-3">
-          <div class="card"><div class="icon">🎯</div><h3>Purpose</h3><p>Help people move from confusion to a simple next step rooted in duty and sincere effort.</p></div>
-          <div class="card"><div class="icon">🔥</div><h3>Anger</h3><p>Explain how anger clouds judgment and how calm action protects both dignity and relationships.</p></div>
-          <div class="card"><div class="icon">🌫️</div><h3>Fear</h3><p>Teach users to act with courage even when outcomes remain uncertain.</p></div>
-          <div class="card"><div class="icon">⛰️</div><h3>Discipline</h3><p>Frame discipline as devotion to one’s path, not punishment.</p></div>
-          <div class="card"><div class="icon">💔</div><h3>Heartbreak</h3><p>Bring compassion, detachment and self-respect into emotional guidance.</p></div>
-          <div class="card"><div class="icon">🕊️</div><h3>Inner Peace</h3><p>Show how steadiness grows through perspective, breath, action and reflection.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="pricing">
-      <div class="container">
-        <div class="section-head">
-          <h2>Simple pricing that matches your launch</h2>
-          <p>
-            One free entry path and one paid plan. That is cleaner, easier to explain, and better for conversion.
-          </p>
-        </div>
-
-        <div class="pricing">
-          <div class="price-card">
-            <div class="badge">Start Here</div>
-            <div class="price-name">Free Daily Access</div>
-            <div class="price-desc">Let users experience the product before paying. Good for growth and trust.</div>
-            <div class="price"><strong>₹0</strong><span>/ day</span></div>
-            <div class="price-note"><span data-free-left>5</span> chats left today</div>
-            <ul class="list">
-              <li>5 free chats daily</li>
-              <li>Good for first-time visitors</li>
-              <li>Sign in with Google</li>
-              <li>Try the experience before upgrading</li>
-            </ul>
-            <a href="#demo" class="btn btn-outline btn-lg" style="width:100%">Start Free</a>
-          </div>
-
-          <div class="price-card main">
-            <div class="badge">Most Popular</div>
-            <div class="price-name">Seva Plan</div>
-            <div class="price-desc">Your main paid plan for launch. Keep it simple and focus attention here.</div>
-            <div class="price"><strong>₹99</strong><span>/ month</span></div>
-            <div class="price-note">Launch pricing active</div>
-            <ul class="list">
-              <li>Unlimited chats</li>
-              <li>Hindi and English</li>
-              <li>Priority future features</li>
-              <li>Premium voice coming soon</li>
-            </ul>
-            <button class="btn btn-primary btn-lg" style="width:100%" onclick="openPayModal('seva')">Upgrade to Seva</button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="demo">
-      <div class="container">
-        <div class="section-head">
-          <h2>Try the free experience</h2>
-          <p>
-            This is still a front-end demo, but it looks clean and tracks the 5 daily free chats properly using browser storage.
-          </p>
+          <h2>Try the chat first</h2>
+          <p>This is now near the top, and the free counter stays visible. Sign-in also shows a clearer status.</p>
         </div>
 
         <div class="demo-box">
@@ -573,12 +207,97 @@
 
           <div class="messages" id="demoMessages">
             <div class="bubble ai"><strong>Welcome:</strong> Ask about purpose, anger, fear, discipline, heartbreak or peace.</div>
-            <div class="bubble ai"><strong>Note:</strong> This demo shows the correct layout and free counter. You can connect your real AI API next.</div>
+            <div class="bubble ai"><strong>Note:</strong> This is a front-end demo layout. Real AI answers can be connected next.</div>
           </div>
 
           <div class="composer">
             <textarea id="demoMessage" placeholder="Ask your question here..."></textarea>
             <button class="btn btn-primary btn-lg" onclick="sendDemo()">Send Free Chat</button>
+          </div>
+          <div class="status" id="signinStatus">Sign-in status: loading...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features" style="padding-top:40px">
+      <div class="container">
+        <div class="section-head">
+          <h2>Built to feel premium</h2>
+          <p>The homepage keeps the design, pricing and main value visible without pushing the chat too far down.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <div class="icon">📖</div>
+            <h3>Scripture-Inspired Guidance</h3>
+            <p>Use the Bhagavad Gita, Ramayana and Mahabharata as inspiration, then explain the advice in simple words people can apply today.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🧠</div>
+            <h3>Life Questions That Matter</h3>
+            <p>Purpose, anger, fear, discipline, heartbreak and peace are stronger launch topics than generic inspiration quotes.</p>
+          </div>
+          <div class="card">
+            <div class="icon">🎤</div>
+            <h3>Premium Voice</h3>
+            <p>Keep this visible, but be honest that it is an upcoming feature.</p>
+            <span class="coming">Coming soon</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="topics" style="padding-top:20px">
+      <div class="container">
+        <div class="section-head">
+          <h2>Real life topics users search for</h2>
+          <p>These make the product feel useful and later can become SEO pages too.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card"><div class="icon">🎯</div><h3>Purpose</h3><p>Help people move from confusion to a simple next step rooted in duty and sincere effort.</p></div>
+          <div class="card"><div class="icon">🔥</div><h3>Anger</h3><p>Explain how anger clouds judgment and how calm action protects dignity and relationships.</p></div>
+          <div class="card"><div class="icon">🌫️</div><h3>Fear</h3><p>Teach users to act with courage even when outcomes remain uncertain.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing" style="padding-top:20px">
+      <div class="container">
+        <div class="section-head">
+          <h2>Simple pricing</h2>
+          <p>One free entry path and one paid plan keeps the launch easier to understand.</p>
+        </div>
+
+        <div class="pricing">
+          <div class="price-card">
+            <div class="badge">Start Here</div>
+            <div class="price-name">Free Daily Access</div>
+            <div class="price-desc">Let users experience the product before paying.</div>
+            <div class="price"><strong>₹0</strong><span>/ day</span></div>
+            <div class="price-note"><span data-free-left>5</span> chats left today</div>
+            <ul class="list">
+              <li>5 free chats daily</li>
+              <li>Good for first-time visitors</li>
+              <li>Sign in with Google</li>
+              <li>Try before upgrading</li>
+            </ul>
+            <a href="#demo" class="btn btn-outline btn-lg" style="width:100%">Start Free</a>
+          </div>
+
+          <div class="price-card">
+            <div class="badge">Most Popular</div>
+            <div class="price-name">Seva Plan</div>
+            <div class="price-desc">Your main paid plan for launch.</div>
+            <div class="price"><strong>₹99</strong><span>/ month</span></div>
+            <div class="price-note">Launch pricing active</div>
+            <ul class="list">
+              <li>Unlimited chats</li>
+              <li>Hindi and English</li>
+              <li>Priority future features</li>
+              <li>Premium voice coming soon</li>
+            </ul>
+            <button class="btn btn-primary btn-lg" style="width:100%" onclick="openPayModal('seva')">Upgrade to Seva</button>
           </div>
         </div>
       </div>
@@ -589,22 +308,16 @@
     <div class="container footer-grid">
       <div>
         <div class="footer-brand">ॐ HINDUAI</div>
-        <div class="footer-text">
-          Ancient wisdom, modern guidance. Designed as a clean launch-ready static homepage for your current repo.
-        </div>
+        <div class="footer-text">Ancient wisdom, modern guidance. Designed as a cleaner static homepage for your current repo.</div>
         <div class="copy">© 2026 HinduAI · सत्यमेव जयते</div>
       </div>
-
       <div class="footer-links">
+        <a href="#demo">Try It</a>
         <a href="#features">Features</a>
         <a href="#topics">Topics</a>
         <a href="#pricing">Pricing</a>
-        <a href="#demo">Try It</a>
       </div>
-
-      <div class="footer-text">
-        HinduAI is an educational and spiritual guidance platform inspired by publicly available Hindu scriptures. It is not intended to hurt any religion, community or individual. AI-generated responses are for guidance purposes only.
-      </div>
+      <div class="footer-text">HinduAI is an educational and spiritual guidance platform inspired by publicly available Hindu scriptures. It is not intended to hurt any religion, community or individual. AI-generated responses are for guidance purposes only.</div>
     </div>
   </footer>
 
@@ -616,7 +329,6 @@
       <div class="om">🪔</div>
       <h3>Continue with HinduAI</h3>
       <p>Start free with 5 daily chats, or upgrade to Seva for unlimited access.</p>
-
       <div class="plans">
         <div class="plan" data-plan="free" onclick="selectPlan('free')">
           <h4>Free</h4>
@@ -627,7 +339,6 @@
           <p>₹99 / month</p>
         </div>
       </div>
-
       <button class="btn btn-primary btn-lg" style="width:100%" onclick="startPayment()">Continue</button>
     </div>
   </div>
@@ -637,45 +348,39 @@
     const CLERK_KEY = "pk_live_Y2xlcmsuaGluZHVhaS5pbiQ";
     let selectedPlan = "seva";
 
+    function setStatus(text){
+      const el = document.getElementById("signinStatus");
+      if(el) el.textContent = text;
+    }
+
     async function bootClerk(){
       try{
-        if(window.Clerk){
-          await window.Clerk.load({ publishableKey: CLERK_KEY });
-          window.__clerk = window.Clerk;
+        if(!window.Clerk){
+          setStatus("Sign-in status: Clerk script not loaded yet.");
+          return;
         }
+        await window.Clerk.load({ publishableKey: CLERK_KEY });
+        window.__clerk = window.Clerk;
+        setStatus("Sign-in status: ready");
       }catch(err){
-        console.log("Clerk note:", err.message);
+        console.log("Clerk error:", err);
+        setStatus("Sign-in status: failed. Check Clerk allowed domains.");
       }
     }
 
-    function getTodayKey(){
-      return "hinduai_free_count_" + new Date().toISOString().slice(0,10);
-    }
-
-    function getUsed(){
-      return parseInt(localStorage.getItem(getTodayKey()) || "0", 10);
-    }
-
-    function getLeft(){
-      return Math.max(0, 5 - getUsed());
-    }
-
-    function bumpUsed(){
-      localStorage.setItem(getTodayKey(), String(getUsed() + 1));
-      updateCounters();
-    }
-
+    function getTodayKey(){ return "hinduai_free_count_" + new Date().toISOString().slice(0,10); }
+    function getUsed(){ return parseInt(localStorage.getItem(getTodayKey()) || "0", 10); }
+    function getLeft(){ return Math.max(0, 5 - getUsed()); }
+    function bumpUsed(){ localStorage.setItem(getTodayKey(), String(getUsed() + 1)); updateCounters(); }
     function updateCounters(){
-      document.querySelectorAll("[data-free-left]").forEach(el => {
-        el.textContent = getLeft();
-      });
+      document.querySelectorAll("[data-free-left]").forEach(el => { el.textContent = getLeft(); });
     }
 
     function openSignIn(){
-      if(window.__clerk && window.__clerk.openSignIn){
+      if(window.__clerk && typeof window.__clerk.openSignIn === "function"){
         window.__clerk.openSignIn();
       }else{
-        alert("Sign-in is still loading. Try again in a second.");
+        alert("Sign-in is not ready yet. If this keeps happening, add hinduai.in and your Vercel domain inside Clerk allowed domains.");
       }
     }
 
@@ -704,12 +409,10 @@
         document.getElementById("demo").scrollIntoView({ behavior: "smooth" });
         return;
       }
-
       if(!window.Razorpay){
         alert("Razorpay did not load.");
         return;
       }
-
       const options = {
         key: RAZORPAY_KEY,
         amount: 9900,
@@ -722,7 +425,6 @@
         },
         theme: { color: "#f5c842" }
       };
-
       const rzp = new Razorpay(options);
       rzp.open();
     }
@@ -731,12 +433,10 @@
       const input = document.getElementById("demoMessage");
       const messages = document.getElementById("demoMessages");
       const text = input.value.trim();
-
       if(!text){
         alert("Type a question first.");
         return;
       }
-
       if(getLeft() <= 0){
         openPayModal("seva");
         return;
